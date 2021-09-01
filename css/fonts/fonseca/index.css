@@ -1,0 +1,7 @@
+@font-face {
+	font-family: 'Fonseca Regular';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url(./fonseca-regular.otf) format('opentype');
+}

@@ -1,0 +1,7 @@
+@font-face {
+	font-family: 'Space Boards';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url(./space-boards.otf) format('opentype');
+}
