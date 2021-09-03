@@ -45,6 +45,9 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 					<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
 				</div>
 				<div class="site-share-ft">
+					<a class="share-github-ft" href="https://github.com/alexboia" target="_blank"></a>
+				</div>
+				<div class="site-share-ft">
 					<a class="share-rss-ft" href="http://feeds.feedburner.com/alexboia-net/toate-posturile" target="_blank"></a>
 				</div>
 				<div class="clear"></div>
