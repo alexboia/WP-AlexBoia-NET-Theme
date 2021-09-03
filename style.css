@@ -394,9 +394,6 @@ img.wp-smiley, .rsswidget img {
 	margin: 24px 0;
 }
 
-#comment {
-	resize: none;
-}
 /* Author profiles */
 
 .author .archive-header {
@@ -1135,6 +1132,24 @@ article.format-quote .entry-content blockquote {
 }
 /* =Comments-------------------------------------------------------------- */
 
+#comment {
+	resize: none;
+}
+
+#comment,
+.comments-area input[type="text"] {
+	background-color: #f7f7f7;
+	border: 0px none;
+	border-radius: 5px;
+	color: #686868;
+	font-size: 14px;
+}
+
+.comments-area input[type="text"],
+#respond form input[type="text"] {
+	padding: 10px !important;
+}
+
 .comments-title {
 	margin-bottom: 18px;
 	font-size: 14px;
@@ -1315,13 +1330,17 @@ section.comment-content p.edit-link {
 	line-height: 1.714285714;
 }
 
+#respond form .comment-form-cookies-consent label {
+	display: inline-block;
+}
+
 #respond form input[type="text"], #respond form textarea {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	font-size: 12px;
 	font-size: 0.857142857rem;
 	line-height: 1.714285714;
-	padding: 5px;
+	padding: 10px;
 	width: 100%;
 }
 
