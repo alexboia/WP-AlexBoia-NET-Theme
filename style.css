@@ -179,6 +179,19 @@ img {
 	text-transform: uppercase;
 	color: #74C2BD;
 }
+
+.archive-title {
+	color: #fff;
+	background-color: #74C2BD;
+	border-radius: 3px;
+	display: inline-block;
+	padding: 10px;
+}
+
+.archive-title span {
+	color: #fff;
+}
+
 /* Shared Post Format styling */
 
 article.format-quote footer.entry-meta, article.format-link footer.entry-meta, article.format-status footer.entry-meta {
@@ -1820,7 +1833,6 @@ img#wpstats {
 	}
 
 	.archive-title span {
-		color: #74C2BD;
 		width: auto !important;
 		font-weight: 500;
 	}
