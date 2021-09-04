@@ -19,7 +19,7 @@
 						</div>
 						<div class="abnet-credits-item abnet-reclama">
 							<span class="abnet-credits-item abnet-development">
-								<a href="https://github.com/alexboia/WP-AlexBoia-NET-Theme" target="_blank"><?php echo esc_html__( 'Tema dezvolata de mine peste clasicul Twenty Twelve.', 'abnet' ); ?></a>
+								<a href="https://github.com/alexboia/WP-AlexBoia-NET-Theme" target="_blank"><?php echo esc_html__( 'Tema dezvolata peste clasicul Twenty Twelve.', 'abnet' ); ?></a>
 							</span>
 							<span class="abnet-credits-item abnet-wpts">
 								<a href="https://wordpress.org/plugins/wp-trip-summary/" target="_blank"><?php echo esc_html__( 'Jurnale de tura documentate folosind WP-Trip-Summary.', 'abnet' ); ?></a>
