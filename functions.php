@@ -493,3 +493,31 @@ function abnet_customize_preview_js() {
 	wp_enqueue_script( 'abnet-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20130301', true );
 }
 add_action( 'customize_preview_init', 'abnet_customize_preview_js' );
+
+
+function abnet_customize_image_caption() {
+	remove_shortcode('wp_caption');
+	remove_shortcode('caption');
+    add_shortcode('wp_caption', 'abnet_img_caption_shortcode');
+	add_shortcode('caption', 'abnet_img_caption_shortcode');
+}
+
+function abnet_img_caption_shortcode( $attr, $content = '' ) {
+	$originalShortCodeContents = img_caption_shortcode($attr, $content);
+	if (empty($attr['width'])) {
+		return $originalShortCodeContents;
+	}
+
+	$width = (int) $attr['width'];
+	if ($width < 0) {
+		return $originalShortCodeContents;
+	}
+
+	return str_ireplace(
+		'class="wp-caption-text"', 
+		'class="wp-caption-text" style="width: ' . $width . 'px;"', 
+		$originalShortCodeContents
+	);
+}
+
+add_action('wp_head','abnet_customize_image_caption');

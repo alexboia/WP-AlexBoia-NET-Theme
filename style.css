@@ -362,6 +362,8 @@ embed, iframe, object, video {
 	font-weight: 400;
 	font-size: 12px;
 	font-family: 'Noto Sans',sans-serif;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 img.wp-smiley, .rsswidget img {
@@ -1804,6 +1806,41 @@ img#wpstats {
 
 /* END Entry meta customization */
 
+/* BEGIN Entry header customization */
+
+.entry-header .date-link, .entry-header .author-link {
+	margin-top: 12px;
+	font-size: 13px;
+}
+
+.entry-header .date-link a, .entry-header .author-link a {
+	color: #757575;
+}
+
+.entry-header .date-link a:hover, .entry-header .author-link a:hover {
+	color: #74C2BD;
+}
+
+.entry-header .date-link, .entry-header .comments-link, .entry-header .author-link {
+	float: left;
+	line-height: normal;
+	margin-right: 12px;
+}
+
+.entry-header .date-link:before {
+	content: '\f305';
+}
+
+.entry-header .comments-link:before {
+	content: '\f300';
+}
+
+.entry-header .author-link:before {
+	content: '\f304';
+}
+
+/* END Entry header customization */
+
 @media screen and (max-width: 1070px) {   
 	body {
 		background-color: #f6f6f6;
@@ -1843,8 +1880,6 @@ img#wpstats {
 	}
 
 	.entry-header .date-link, .entry-header .comments-link, .entry-header .author-link {
-		float: left;
-		line-height: normal;
 		margin-right: 16px;
 		margin-top: 4px;
 	}
@@ -2267,37 +2302,6 @@ img#wpstats {
 
 	.entry-title, .entry-content {
 		color: #222222;
-	}
-
-	.entry-header .date-link, .entry-header .author-link {
-		margin-top: 12px;
-		font-size: 13px;
-	}
-
-	.entry-header .date-link a, .entry-header .author-link a {
-		color: #757575;
-	}
-
-	.entry-header .date-link a:hover, .entry-header .author-link a:hover {
-		color: #74C2BD;
-	}
-
-	.entry-header .date-link, .entry-header .comments-link, .entry-header .author-link{
-		float: left;
-		line-height: normal;
-		margin-right: 12px;
-	}
-
-	.entry-header .date-link:before {
-		content: '\f305';
-	}
-
-	.entry-header .comments-link:before {
-		content: '\f300';
-	}
-
-	.entry-header .author-link:before {
-		content: '\f304';
 	}
 
 	.entry-content div.really_simple_share_prepend_above {
