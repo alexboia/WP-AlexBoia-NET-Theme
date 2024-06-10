@@ -25,6 +25,14 @@
 			<?php endif; // is_single() ?>
 
             <div class="entry-header-links">
+				<?php if (is_singular()): ?>
+					<div class="author-link">
+						<a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta( 'ID' ))); ?>" target="_blank" rel="author">
+							<?php echo get_the_author(); ?>
+						</a>
+					</div>
+				<?php endif; ?>
+
                 <?php $post_date = abnet_entry_meta_date(); ?>
                 <?php if ($post_date): ?>
                     <div class="date-link">
