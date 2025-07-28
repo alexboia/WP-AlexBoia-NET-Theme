@@ -4,7 +4,7 @@ Theme URI: http://wordpress.org/extend/themes/twentytwelve
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 12.0
+Version: 13.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -669,6 +669,20 @@ a:hover {
 
 .widget ul li a:hover {
 	text-decoration: underline;
+}
+
+.widget-area .widget.abnet-my-newsletter {
+	background-color: #F0F9FF;
+}
+
+.widget.abnet-my-newsletter .custom-html-widget {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+.widget.abnet-my-newsletter .widget-title {
+	margin-bottom: 0px;
+	background-color: rgba(255, 103, 25, 0.7);
 }
 
 .abnet-recent-posts ul .post-date {
@@ -2138,6 +2152,15 @@ img#wpstats {
 
 	.share-github-ft:before {
 		content: '\f200';
+	}
+
+	.share-substack-ft {
+		background-image: url(./img/substack.png);
+		background-position: left;
+		background-repeat: no-repeat;
+		width: 32px;
+		height: 32px;
+		display: inline-block;
 	}
 
 	.site-header h1, .site-header h2 {
