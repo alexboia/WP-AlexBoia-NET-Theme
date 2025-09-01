@@ -4,7 +4,7 @@ Theme URI: http://wordpress.org/extend/themes/twentytwelve
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 13.0
+Version: 13.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -48,10 +48,9 @@ http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/
 
 /* Register fonts */
 @import './css/fonts/roboto/index.css';
-@import './css/fonts/noto-sans/index.css';
 @import './css/fonts/fonseca/index.css';
-@import './css/fonts/space-boards/index.css';
 @import './css/fonts/noir/index.css';
+@import './css/fonts/inter/index.css';
 
 /* =Reset
 -------------------------------------------------------------- */
@@ -235,7 +234,7 @@ input[type="checkbox"], input[type="radio"], input[type="file"], input[type="hid
 	background-color: #f3f3f5;
 	border: 0px none;
 	border-radius: 2px;
-	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 }
 
 .menu-toggle, button, input[type="submit"], input[type="button"], input[type="reset"] {
@@ -361,7 +360,7 @@ embed, iframe, object, video {
 	font-style: normal;
 	font-weight: 400;
 	font-size: 12px;
-	font-family: 'Noto Sans',sans-serif;
+	font-family: 'Inter',sans-serif;
 	max-width: 100%;
 	box-sizing: border-box;
 }
@@ -562,7 +561,7 @@ html {
 body {
 	font-size: 15px;
 	font-weight: 400;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Inter', sans-serif;
 	text-rendering: optimizeLegibility;
 	color: #444;
 }
@@ -631,7 +630,7 @@ a:hover {
 }
 
 .widget-title {
-	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-weight: 500;
 	text-transform: none;
 	font-size: 15px;
@@ -663,7 +662,7 @@ a:hover {
 .widget ul li a {
 	text-decoration: none;
 	font-size: 13px;
-	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 	color: #515151;
 }
 
@@ -898,7 +897,7 @@ footer[role="contentinfo"] a:hover {
 }
 
 .abnet-credits-item {
-	font-family: 'Noto Sans',sans-serif;
+	font-family: 'Inter',sans-serif;
 	color: #e6e6e6;
 }
 
@@ -922,7 +921,7 @@ footer[role="contentinfo"] a:hover {
 
 .entry-meta {
 	clear: both;
-	font-family: 'Noto Sans',sans-serif;
+	font-family: 'Inter',sans-serif;
 }
 
 .entry-header .date-link:before, .entry-header .comments-link:before, .entry-header .author-link:before {
@@ -945,7 +944,7 @@ footer[role="contentinfo"] a:hover {
 .entry-header .entry-title {
 	font-size: 18px;
 	line-height: 1.2;
-	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-weight: normal;
 }
 
@@ -1188,7 +1187,7 @@ a.more-link {
 	margin-bottom: 5px;
 	display: inline-block;
 	border-radius: 2px;
-	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 }
 
 a.more-link span.meta-nav {
@@ -1446,7 +1445,7 @@ article.format-quote .entry-content blockquote {
 }
 
 .comments-area article header cite, .comments-area article header time {
-	font-family: 'Noto Sans',sans-serif;
+	font-family: 'Inter',sans-serif;
 }
 
 .comments-area article header cite, .comments-area article header time {
@@ -1746,7 +1745,7 @@ img#wpstats {
 
 /* BEGIN Customize Comment Control Links */
 .comment-control {
-	font-family: 'Noto Sans',sans-serif;
+	font-family: 'Inter',sans-serif;
 }
 
 .comment-control .edit-link, .comment-control .reply {
@@ -1972,7 +1971,7 @@ img#wpstats {
 
 	#nav-below a {
 		text-decoration: none;
-		font-family: 'Noto Sans', sans-serif;
+		font-family: 'Inter', sans-serif;
   		font-weight: 500;
 	}
 
@@ -2002,7 +2001,7 @@ img#wpstats {
 		box-sizing: border-box;
 		padding: 16px;
 		border-radius: 8px;
-		font-family: 'Noto Sans', sans-serif;
+		font-family: 'Inter', sans-serif;
 		font-size: 13px;
 	}
 
@@ -2027,7 +2026,7 @@ img#wpstats {
 		line-height: normal;
 		display: table;
 		width: 100%;
-		font-family: 'Noto Sans', sans-serif;
+		font-family: 'Inter', sans-serif;
 	}
 	
 	.site-content nav.nav-single .nav-single-row {
@@ -2170,7 +2169,7 @@ img#wpstats {
 	.site-header h1 {
 		font-size: 26px;
 		margin-bottom: 0;
-		font-family: 'Noto Sans', sans-serif;
+		font-family: 'Inter', sans-serif;
 	}
 
 	.site-header h1 a {
@@ -2206,7 +2205,7 @@ img#wpstats {
 
 	.main-navigation {
 		text-align: left;
-		font-family: 'Noto Sans',sans-serif;
+		font-family: 'Inter',sans-serif;
 	}
 
 	.main-navigation ul.nav-menu, .main-navigation div.nav-menu > ul {
@@ -2230,7 +2229,7 @@ img#wpstats {
 		color: #888888;
 		line-height: 50px;
 		white-space: nowrap;
-		font-family: 'Noto Sans', sans-serif;
+		font-family: 'Inter', sans-serif;
 		font-size: 13px;
 		font-weight: 400;
 		padding-right: 20px;
@@ -2447,7 +2446,7 @@ img#wpstats {
 	border-radius: 3px;
 	color: #FFF !important;
 	padding: 10px;
-	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 12px;
 }
 
