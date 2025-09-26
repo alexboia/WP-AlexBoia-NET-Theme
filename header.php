@@ -48,7 +48,7 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 					<a class="share-github-ft" href="https://github.com/alexboia" target="_blank"></a>
 				</div>
 				<div class="site-share-ft">
-					<a class="share-substack-ft" href="https://taicab.substack.com/" target="_blank"></a>
+					<a class="share-substack-ft" href="https://substack.com/@alexandruboia" target="_blank"></a>
 				</div>
 				<div class="site-share-ft">
 					<a class="share-rss-ft" href="http://feeds.feedburner.com/alexboia-net/toate-posturile" target="_blank"></a>

@@ -4,7 +4,7 @@ Theme URI: http://wordpress.org/extend/themes/twentytwelve
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 13.1
+Version: 13.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -2446,7 +2446,7 @@ img#wpstats {
 	border-radius: 3px;
 	color: #FFF !important;
 	padding: 10px;
-	font-family: 'Inter', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
 }
 
@@ -2461,6 +2461,12 @@ img#wpstats {
 .abp01-techbox-teaser a,
 .abp01-techbox-content-skip-teaser a {
 	color: #FFF !important;
+}
+
+.abp01-info-item,
+.abp01-info-item .abp01-info-label,
+.abp01-info-item .abp01-info-value {
+	font-family: 'Roboto', sans-serif;
 }
 
 /* =Print----------------------------------------------- */
