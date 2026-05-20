@@ -167,8 +167,8 @@ function abnet_scripts_styles() {
 	/*
 	 * Loads the Internet Explorer specific stylesheet.
 	 */
-	wp_enqueue_style( 'abnet-ie', get_template_directory_uri() . '/css/ie.css', array( 'abnet-style' ), '20121010' );
-	$wp_styles->add_data( 'abnet-ie', 'conditional', 'lt IE 9' );
+	//wp_enqueue_style( 'abnet-ie', get_template_directory_uri() . '/css/ie.css', array( 'abnet-style' ), '20121010' );
+	//$wp_styles->add_data( 'abnet-ie', 'conditional', 'lt IE 9' );
 }
 add_action( 'wp_enqueue_scripts', 'abnet_scripts_styles' );
 
