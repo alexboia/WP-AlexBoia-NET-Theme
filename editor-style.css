@@ -7,7 +7,9 @@ html {
 	font-size: 87.5%;
 }
 html .mceContentBody {
-	max-width: 625px;
+	max-width: 679px;
+	min-width: 679px;
+	width: 679px;
 }
 body {
 	color: #444;

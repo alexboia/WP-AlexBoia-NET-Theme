@@ -4,7 +4,7 @@ Theme URI: http://wordpress.org/extend/themes/twentytwelve
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 13.3
+Version: 13.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -52,8 +52,22 @@ http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/
 @import './css/fonts/noir/index.css';
 @import './css/fonts/inter/index.css';
 
-/* =Reset
--------------------------------------------------------------- */
+/* =Variables= */
+:root {
+	--abnet-accent-main: #1FA4B4;
+	--abnet-accent-untamed: #0A3868;
+	--abnet-attention: rgba(255, 103, 25, 0.7);
+	--abnet-attention-bg: #F0F9FF;
+	--abnet-attention-content: #CC5511;
+	--abnet-neutral-content: #e7e7e7;
+	--abnet-neutral-light-bg: #fafafa;
+	--abnet-regular-width: 1010px;
+	--abnet-sidebar-width: 305px;
+	--abnet-sitecontent-width: 679px;
+	--abnet-image-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* =Reset= */
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
@@ -176,12 +190,12 @@ img {
 	line-height: 2.181818182;
 	font-weight: bold;
 	text-transform: uppercase;
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .archive-title {
 	color: #fff;
-	background-color: #74C2BD;
+	background-color: var(--abnet-accent-main);
 	border-radius: 3px;
 	display: inline-block;
 	padding: 10px;
@@ -258,7 +272,7 @@ button[disabled], input[disabled] {
 
 .bypostauthor cite span {
 	color: #fff;
-	background-color: #74C2BD;
+	background-color: var(--abnet-accent-main);
 	background-image: none;
 	border-radius: 3px;
 	box-shadow: none;
@@ -303,9 +317,18 @@ embed, iframe, object, video {
 	margin-right: auto;
 }
 
-.entry-content img, .comment-content img, .widget img, img.header-image, .author-avatar img, img.wp-post-image { /* Add fancy borders to all WordPress-added images but not things like badges and icons and the like */
+.entry-content img, 
+.comment-content img, 
+.widget img, 
+img.header-image, 
+.author-avatar img, 
+img.wp-post-image { 
+	/* 
+		Add fancy borders to all WordPress-added images 
+		but not things like badges and icons and the like 
+	*/
 	border-radius: 3px;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+	box-shadow: var(--abnet-image-shadow);
 }
 
 .wp-caption {
@@ -453,7 +476,7 @@ nav.nav-single .nav-previous, nav.nav-single .nav-next {
 }
 
 nav.nav-single .nav-previous.nav-with-post:hover, nav.nav-single .nav-next.nav-with-post:hover {
-	background-color: #74C2BD;
+	background-color: var(--abnet-accent-main);
 	color: #fff !important;
 }
 
@@ -568,7 +591,7 @@ body {
 
 a {
 	outline: none;
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 a:hover {
@@ -619,14 +642,15 @@ a:hover {
 }
 
 .widget-area .widget a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .widget-area .widget {
 	padding: 15px;
 	padding-top: 0px;
 	border-radius: 5px;
-	background-color: #fafafa;
+	background-color: #FCFDFE;
+	border-bottom: 3px solid var(--abnet-accent-main);
 }
 
 .widget-title {
@@ -642,9 +666,10 @@ a:hover {
 	padding-bottom: 15px;
 	padding-left: 15px;
 	padding-right: 15px;
-	background-color: #74C2BD;
+	background-color: var(--abnet-accent-main);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+	border-right: 1px solid var(--abnet-accent-main);
 }
 
 .widget ul li {
@@ -671,7 +696,8 @@ a:hover {
 }
 
 .widget-area .widget.abnet-my-newsletter {
-	background-color: #F0F9FF;
+	background-color: var(--abnet-attention-bg);
+	border-bottom: 3px solid var(--abnet-attention);;
 }
 
 .widget.abnet-my-newsletter .custom-html-widget {
@@ -681,7 +707,8 @@ a:hover {
 
 .widget.abnet-my-newsletter .widget-title {
 	margin-bottom: 0px;
-	background-color: rgba(255, 103, 25, 0.7);
+	background-color: var(--abnet-attention);
+	border-left-color:var(--abnet-attention-content, #CC5511);
 }
 
 .abnet-recent-posts ul .post-date {
@@ -700,15 +727,15 @@ a:hover {
 }
 
 .widget.widget_nav_menu.abnet-blogroll .widget-title {
-	background-color: #d499b9;
+	background-color: var(--abnet-accent-main);
 }
 
 .widget.widget_nav_menu.abnet-my-projects .widget-title {
-	background-color: #647d9b;
+	background-color: var(--abnet-accent-main);
 }
 
 .widget.widget_text.abnet-status .widget-title {
-	background-color: #e7bb41;
+	background-color: var(--abnet-accent-main);
 }
 
 .widget.widget_nav_menu.abnet-blogroll .menu .menu-item a:before {
@@ -747,13 +774,13 @@ a:hover {
 }
 
 .site-header h1 a, .site-header h2 a {
-	color: #515151;
+	color: var(--abnet-accent-untamed);
 	display: inline-block;
 	text-decoration: none;
 }
 
 .site-header h1 a:hover, .site-header h2 a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .site-header h1 {
@@ -766,11 +793,13 @@ a:hover {
 .site-header h1.site-title {
 	font-family: 'Noir Regular';
 	font-weight: normal;
+	color: var(--abnet-accent-untamed);
 	font-size: 28px;
 }
 
 .site-header h2.site-description {
 	font-family: 'Fonseca Regular'; 
+	color: var(--abnet-accent-untamed);
 	font-size: 7px;
 }
 
@@ -779,7 +808,7 @@ a:hover {
 	font-size: 13px;
 	font-size: 0.928571429rem;
 	line-height: 1.846153846;
-	color: #757575;
+	color: var(--abnet-accent-untamed);
 }
 
 .header-image {
@@ -804,7 +833,7 @@ a:hover {
 }
 
 .main-navigation a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .main-navigation ul.nav-menu, .main-navigation div.nav-menu > ul {
@@ -861,7 +890,7 @@ section[role="banner"] {
 }
 
 .widget-area .widget a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .widget-area .widget a:visited {
@@ -893,7 +922,7 @@ footer[role="contentinfo"] a {
 }
 
 footer[role="contentinfo"] a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .abnet-credits-item {
@@ -946,6 +975,7 @@ footer[role="contentinfo"] a:hover {
 	line-height: 1.2;
 	font-family: 'Inter', sans-serif;
 	font-weight: normal;
+	color: var(--abnet-accent-untamed);
 }
 
 .entry-header .entry-title a {
@@ -970,7 +1000,7 @@ footer[role="contentinfo"] a:hover {
 }
 
 .comments-link a:hover, .entry-meta a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 article.sticky .featured-post {
@@ -1196,7 +1226,7 @@ a.more-link span.meta-nav {
 
 a.more-link:hover {
 	color: #FFF !important;
-	background-color: #74C2BD;        
+	background-color: var(--abnet-accent-main);        
 }
 
 a.more-link:visited {
@@ -1395,7 +1425,7 @@ article.format-quote .entry-content blockquote {
 }
 
 .format-status .entry-header header a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .format-status .entry-header img {
@@ -1496,7 +1526,7 @@ article.format-quote .entry-content blockquote {
 }
 
 .comments-area article header a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .comments-area article header cite a {
@@ -1545,7 +1575,7 @@ a.comment-reply-link, a.comment-edit-link {
 }
 
 a.comment-reply-link:hover, a.comment-edit-link:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .commentlist .pingback {
@@ -1662,7 +1692,7 @@ section.comment-content p.edit-link {
 }
 
 .template-front-page .widget-area .widget li a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .template-front-page .widget-area .widget_text img {
@@ -1763,8 +1793,8 @@ img#wpstats {
 }
 
 .comment-control a:hover {
-	background-color: #74C2BD;
-	border-color: #74C2BD;
+	background-color: var(--abnet-accent-main);
+	border-color: var(--abnet-accent-main);
 	color: #fff !important;
 }
 
@@ -1831,7 +1861,7 @@ img#wpstats {
 }
 
 .entry-header .date-link a:hover, .entry-header .author-link a:hover {
-	color: #74C2BD;
+	color: var(--abnet-accent-main);
 }
 
 .entry-header .date-link, .entry-header .comments-link, .entry-header .author-link {
@@ -1920,7 +1950,7 @@ img#wpstats {
 	}
 
 	.entry-header .date-link a:hover { 
-		color: #74C2BD;
+		color: var(--abnet-accent-main);
 	}
 
 	.main-navigation {
@@ -2054,14 +2084,14 @@ img#wpstats {
 
 	.site {
 		margin: 0 auto;
-		max-width: 990px;
-		width: 990px;
+		max-width: var(--abnet-regular-width);
+		width: var(--abnet-regular-width);
 		overflow: hidden;
 	}
 
 	.site-content {
 		float: left;
-		width: 659px;
+		width: var(--abnet-sitecontent-width);
 		overflow: hidden;
 	}
 
@@ -2081,7 +2111,7 @@ img#wpstats {
 
 	.widget-area {
 		float: left;
-		width: 305px;
+		width: var(--abnet-sidebar-width);
 		/*padding-left: 25px;*/
 		margin-left: 25px;
 		/*border-left: 1px solid #EDEDED;*/
@@ -2090,6 +2120,7 @@ img#wpstats {
 
 	.site-name {
 		float: left;
+		color: var(--abnet-accent-untamed);
 	}
 
 	.site-share, .site-share-ft {
@@ -2173,7 +2204,7 @@ img#wpstats {
 	}
 
 	.site-header h1 a {
-		color: #515151;
+		color: var(--abnet-accent-untamed);
 	}
 
 	.archive-header {
@@ -2291,7 +2322,7 @@ img#wpstats {
 	.main-navigation .current-menu-ancestor > a, 
 	.main-navigation .current_page_item > a, 
 	.main-navigation .current_page_ancestor > a {
-		color: #636363;
+		color: var(--abnet-accent-untamed);
 		font-weight: bold;
 	}
 
@@ -2504,8 +2535,8 @@ img#wpstats {
 		margin-bottom: 72px;
 		margin-bottom: 5.142857143rem;
 		text-align: left;
-		width: 990px;
-		max-width: 990px;
+		width: var(--abnet-regular-width);
+		max-width: var(--abnet-regular-width);
 	}
 
 	.site-header h1 {
@@ -2521,7 +2552,7 @@ img#wpstats {
 	}
 
 	.site-header h1 a, .site-header h2 a {
-		color: #000;
+		color: var(--abnet-accent-untamed);
 	}
 
 	.author-avatar, #colophon, #respond, .commentlist .comment-edit-link, .commentlist .reply, .entry-header .comments-link, .entry-meta .edit-link a, .page-link, .site-content nav, .widget-area, img.header-image, .main-navigation {
