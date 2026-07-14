@@ -3,6 +3,23 @@ Theme Name: Wp AbNet
 Description: Used to style the TinyMCE editor.
 */
 
+:root {
+	--abnet-accent-main: #1FA4B4;
+	--abnet-accent-untamed: #0A3868;
+	--abnet-attention: rgba(255, 103, 25, 0.7);
+	--abnet-attention-bg: #F0F9FF;
+	--abnet-attention-content: #CC5511;
+	--abnet-neutral-content: #e7e7e7;
+	--abnet-neutral-light-bg: #fafafa;
+	
+	--abnet-regular-site-width: 1010px;
+	--abnet-regular-sidebar-width: 305px;
+	--abnet-regular-nav-width: 1090px;
+	--abnet-regular-site-content-width: 679px;
+	
+	--abnet-image-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
 html {
 	font-size: 87.5%;
 }
@@ -22,8 +39,7 @@ body {
 }
 
 
-/* =Headings
--------------------------------------------------------------- */
+/* =Headings= */
 
 h1,
 h2,
@@ -71,8 +87,7 @@ hr {
 }
 
 
-/* =Text elements
--------------------------------------------------------------- */
+/* =Text elements= */
 
 p {
 	line-height: 1.714285714;
@@ -213,8 +228,7 @@ textarea {
 }
 
 
-/* =Links
--------------------------------------------------------------- */
+/* =Links= */
 
 a,
 a em,
@@ -229,8 +243,7 @@ a:hover {
 }
 
 
-/* =Alignment
--------------------------------------------------------------- */
+/* =Alignment= */
 
 .alignleft {
 	display: inline;
@@ -254,8 +267,7 @@ a:hover {
 }
 
 
-/* =Tables
--------------------------------------------------------------- */
+/* =Tables= */
 
 table {
 	border-bottom: 1px solid #ededed;
@@ -288,8 +300,7 @@ td {
 }
 
 
-/* =Images
--------------------------------------------------------------- */
+/* =Images= */
 
 img,
 .editor-attachment {
@@ -341,4 +352,40 @@ img.wp-smiley {
 	line-height: 2;
 	margin: 0 0 24px;
 	margin: 0 0 1.71429rem;
+}
+
+/* =Enlighter= */
+pre.EnlighterJSRAW::before {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding: 16px !important;
+	background-color: var(--abnet-accent-untamed) !important;
+}
+
+pre.EnlighterJSRAW {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding-bottom: 8px;
+	background-image: none !important;
+}
+
+#EnlighterToolbar .editicon {
+	top: 57px !important;
+	right: 52px !important;
+	background-image: url(./img/enlighter-code-edit-32.png) !important;
+}
+
+#EnlighterToolbar .deleteicon {
+	display: block;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	cursor: pointer;
+	right: 15px;
+	border-radius: 0px;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+	top: 57px !important;
+	background-image: url(./img/enlighter-code-delete-32.png) !important;
 }

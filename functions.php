@@ -22,6 +22,8 @@
  * @since WP AbNet 1.0
  */
 
+require_once __DIR__ . '/functions-admin.php';
+
 /**
  * Sets up the content width value based on the theme's design and stylesheet.
  */

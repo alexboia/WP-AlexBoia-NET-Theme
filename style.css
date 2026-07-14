@@ -4,7 +4,7 @@ Theme URI: http://wordpress.org/extend/themes/twentytwelve
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 13.4
+Version: 13.6
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -61,9 +61,12 @@ http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/
 	--abnet-attention-content: #CC5511;
 	--abnet-neutral-content: #e7e7e7;
 	--abnet-neutral-light-bg: #fafafa;
-	--abnet-regular-width: 1010px;
-	--abnet-sidebar-width: 305px;
-	--abnet-sitecontent-width: 679px;
+	
+	--abnet-regular-site-width: 1010px;
+	--abnet-regular-sidebar-width: 305px;
+	--abnet-regular-nav-width: 1090px;
+	--abnet-regular-site-content-width: 679px;
+	
 	--abnet-image-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -1884,7 +1887,7 @@ img#wpstats {
 
 /* END Entry header customization */
 
-@media screen and (max-width: 1070px) {   
+@media screen and (max-width: 1090px) {   
 	body {
 		background-color: #f6f6f6;
 		background-image: url(./img/backgrounds/dust_scratches.png);
@@ -2051,7 +2054,7 @@ img#wpstats {
 	}
 }
 
-@media screen and (min-width: 1070px) {   
+@media screen and (min-width: 1090px) {   
 	.site-content nav.nav-single {
 		line-height: normal;
 		display: table;
@@ -2067,8 +2070,8 @@ img#wpstats {
 	.site-header .site-header-line1,
 	.site-header .site-header-line2 .main-navigation  {
 		margin: 0 auto;
-		width: 1070px;
-		max-width: 1070px;
+		width: var(--abnet-regular-nav-width);
+		max-width: var(--abnet-regular-nav-width);
 	}
 
 	.author-avatar {
@@ -2084,14 +2087,14 @@ img#wpstats {
 
 	.site {
 		margin: 0 auto;
-		max-width: var(--abnet-regular-width);
-		width: var(--abnet-regular-width);
+		max-width: var(--abnet-regular-site-width);
+		width: var(--abnet-regular-site-width);
 		overflow: hidden;
 	}
 
 	.site-content {
 		float: left;
-		width: var(--abnet-sitecontent-width);
+		width: var(--abnet-regular-site-content-width);
 		overflow: hidden;
 	}
 
@@ -2111,7 +2114,7 @@ img#wpstats {
 
 	.widget-area {
 		float: left;
-		width: var(--abnet-sidebar-width);
+		width: var(--abnet-regular-sidebar-width);
 		/*padding-left: 25px;*/
 		margin-left: 25px;
 		/*border-left: 1px solid #EDEDED;*/
@@ -2155,7 +2158,7 @@ img#wpstats {
 	}
 
 	.site-share-ft a {
-		color: #515151;
+		color: var(--abnet-accent-untamed);
 		margin-left: 6px;
 		opacity: 0.6;
 	}
@@ -2535,8 +2538,8 @@ img#wpstats {
 		margin-bottom: 72px;
 		margin-bottom: 5.142857143rem;
 		text-align: left;
-		width: var(--abnet-regular-width);
-		max-width: var(--abnet-regular-width);
+		width: var(--abnet-regular-site-width);
+		max-width: var(--abnet-regular-site-width);
 	}
 
 	.site-header h1 {
