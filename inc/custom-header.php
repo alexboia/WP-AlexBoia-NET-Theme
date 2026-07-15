@@ -108,35 +108,35 @@ function abnet_header_style() {
 function abnet_admin_header_style() {
 ?>
 	<style type="text/css" id="abnet-admin-header-css">
-	.appearance_page_custom-header #headimg {
-		border: none;
-		font-family: "Open Sans", Helvetica, Arial, sans-serif;
-	}
-	#headimg h1,
-	#headimg h2 {
-		line-height: 1.84615;
-		margin: 0;
-		padding: 0;
-	}
-	#headimg h1 {
-		font-size: 26px;
-	}
-	#headimg h1 a {
-		color: #515151;
-		text-decoration: none;
-	}
-	#headimg h1 a:hover {
-		color: #21759b !important; /* Has to override custom inline style. */
-	}
-	#headimg h2 {
-		color: #757575;
-		font-size: 13px;
-		margin-bottom: 24px;
-	}
-	#headimg img {
-		max-width: <?php echo get_theme_support( 'custom-header', 'max-width' ); ?>px;
-	}
-	</style>
+		.appearance_page_custom-header #headimg {
+			border: none;
+			font-family: "Open Sans", Helvetica, Arial, sans-serif;
+		}
+		#headimg h1,
+		#headimg h2 {
+			line-height: 1.84615;
+			margin: 0;
+			padding: 0;
+		}
+		#headimg h1 {
+			font-size: 26px;
+		}
+		#headimg h1 a {
+			color: #515151;
+			text-decoration: none;
+		}
+		#headimg h1 a:hover {
+			color: #21759b !important; /* Has to override custom inline style. */
+		}
+		#headimg h2 {
+			color: #757575;
+			font-size: 13px;
+			margin-bottom: 24px;
+		}
+		#headimg img {
+			max-width: <?php echo get_theme_support( 'custom-header', 'max-width' ); ?>px;
+		}
+		</style>
 <?php
 }
 

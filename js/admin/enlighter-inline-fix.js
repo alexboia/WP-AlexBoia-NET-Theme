@@ -26,8 +26,6 @@
 				return;
 			}
 
-			console.log(event.content);
-
 			//If inserting inline contents, Enlighter will add a new paragraph:
 			// <code class="EnlighterJSRAW" data-enlighter-language="generic">TEST2</code><p></p>
 

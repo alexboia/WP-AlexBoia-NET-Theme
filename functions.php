@@ -1,6 +1,6 @@
 <?php
 /**
- * Twenty Twelve functions and definitions.
+ * Functions and definitions.
  *
  * Sets up the theme and provides some helper functions, which are used
  * in the theme as custom template tags. Others are attached to action and
@@ -45,7 +45,7 @@ if ( ! isset( $content_width ) )
  */
 function abnet_setup() {
 	/*
-	 * Makes Twenty Twelve available for translation.
+	 * Makes theme available for translation.
 	 *
 	 * Translations can be added to the /languages/ directory.
 	 * If you're building a theme based on Twenty Twelve, use a find and replace

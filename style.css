@@ -1,6 +1,6 @@
 /*
 Theme Name: Wp AbNet
-Theme URI: http://wordpress.org/extend/themes/twentytwelve
+Theme URI: https://github.com/alexboia/WP-AlexBoia-NET-Theme
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
@@ -185,7 +185,8 @@ img {
 	display: table;
 	content: "";
 }
-/* =Repeatable patterns-------------------------------------------------------------- */ /* Small headers */
+/* =Repeatable patterns= */ 
+/* Small headers */
 
 .archive-title, .page-title, .widget-title, .entry-content th, .comment-content th {
 	font-size: 11px;
