@@ -36,10 +36,10 @@ class ThemeHookContext {
 		$this->_post  = $post ?? null;
 
 		$this->_blogSettings = array(
-			'blog_name'        => get_bloginfo( 'name' ),
-			'blog_description' => get_bloginfo( 'description' ),
-			'blog_url'         => get_home_url(),
-			'blog_language'    => get_bloginfo( 'language' ),
+			'blog_name' => get_bloginfo('name'),
+			'blog_description' => get_bloginfo('description'),
+			'blog_url'  => get_home_url(),
+			'blog_language' => get_bloginfo('language'),
 		);
 	}
 
@@ -88,12 +88,12 @@ class ThemeHookContext {
 	}
 
 	public function getArchiveTitle(): ?string {
-		if ( is_category() ) {
-			return single_cat_title( '', false );
-		} elseif ( is_tag() ) {
-			return single_tag_title( '', false );
-		} elseif ( is_author() ) {
-			return get_the_author_meta( 'display_name', get_query_var( 'author' ) );
+		if (is_category()) {
+			return single_cat_title('', false);
+		} elseif (is_tag()) {
+			return single_tag_title('', false);
+		} elseif (is_author()) {
+			return get_the_author_meta('display_name', get_query_var('author'));
 		}
 		return '';
 	}
