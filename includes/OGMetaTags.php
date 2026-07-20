@@ -47,13 +47,14 @@ class OGMetaTags {
 	 * Generate OG meta tags based on current page
 	 */
 	private function _generateTags(): void {
-		$this->_addDefaultTags();
-
 		if ( $this->_context->isSingle() || $this->_context->isPage() ) {
+			$this->_addDefaultTags(false);
 			$this->_addPostTags();
 		} elseif ( $this->_context->isArchive() ) {
+			$this->_addDefaultTags();
 			$this->_addArchiveTags();
 		} else {
+			$this->_addDefaultTags();
 			$this->_addHomeTags();
 		}
 	}
@@ -61,7 +62,7 @@ class OGMetaTags {
 	/**
 	 * Add default OG tags
 	 */
-	private function _addDefaultTags(): void {
+	private function _addDefaultTags(bool $addType = true): void {
 		$settings = $this->_context->getBlogSettings();
 
 		$this->_tags[] = new MetaTag(
@@ -69,11 +70,15 @@ class OGMetaTags {
 			$settings['blog_name'], 
 			'og:site_name'
 		);
-		$this->_tags[] = new MetaTag(
-			'og:type', 
-			'website', 
-			'og:type'
-		);
+		
+		if ($addType) {
+			$this->_tags[] = new MetaTag(
+				'og:type', 
+				'website', 
+				'og:type'
+			);
+		}
+
 		$this->_tags[] = new MetaTag(
 			'og:locale', 
 			$this->_determineOGLocale( $settings['blog_language'] ), 
@@ -221,7 +226,9 @@ class OGMetaTags {
 			$description = $settings['blog_description'];
 		}
 
-		return apply_filters('abnet_og_blog_description', $description, $this->_context);
+		return apply_filters('abnet_og_blog_description', 
+			$description, 
+			$this->_context);
 	}
 
 	/**
@@ -229,18 +236,23 @@ class OGMetaTags {
 	 *
 	 * @param \WP_Post $post The post object.
 	 */
-	private function _computePostDescription( \WP_Post $post ): string {
-		if (!empty( $post->post_excerpt)) {
-			return wp_strip_all_tags($post->post_excerpt);
+	private function _computePostDescription(\WP_Post $post): string {
+		$description = '';
+		if (!empty($post->post_excerpt)) {
+			$description = wp_strip_all_tags($post->post_excerpt);
 		}
 
-		if (!empty( $post->post_content)) {
-			return wp_strip_all_tags(
-				wp_trim_words($post->post_content, 30)
-			);
+		if (!empty($description) && !empty($post->post_content)) {
+			$contents = wp_strip_all_tags($post->post_content);
+			$contents = strip_shortcodes($contents);
+			$contents = trim($contents);
+			$description = wp_trim_words($contents, 25);
 		}
 
-		return '';
+		return apply_filters('abnet_og_post_description', 
+			$description, 
+			$this->_context, 
+			$post);
 	}
 
 	/**
@@ -251,7 +263,7 @@ class OGMetaTags {
 	 * @param \WP_Post $post The post object.
 	 * @return string|false Image URL or false if none found.
 	 */
-	private function _getPostImageUrl( \WP_Post $post ): string|false {
+	private function _getPostImageUrl(\WP_Post $post): string|false {
 		// Try to get featured image first
 		$imageId = get_post_thumbnail_id($post);
 		if ($imageId) {
