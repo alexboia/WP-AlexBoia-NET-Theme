@@ -107,8 +107,7 @@
 
 			onclick: function () {
 				//Store node in case focus changes occur
-				var block = findEnlighterBlock();
-				removeEnlighterBlock(block);
+				editor.execCommand('RemoveEnlighterBlock');
 			}
 		});
 
