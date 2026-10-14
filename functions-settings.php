@@ -42,6 +42,30 @@ function abnet_add_meta_settings_page(): void {
 add_action('admin_menu',
 	'abnet_add_meta_settings_page');
 
+function abnet_enqueue_settings_page_styles(string $hookSuffix): void {
+	if ($hookSuffix !== 'settings_page_' . ABNET_META_SETTINGS_PAGE_SLUG) {
+		return;
+	}
+
+	$themeUri = get_template_directory_uri();
+	$version = wp_get_theme()->get('Version');
+
+	foreach (array('noir', 'fonseca', 'inter') as $font) {
+		wp_enqueue_style('abnet-font-' . $font,
+			$themeUri . '/css/fonts/' . $font . '/index.css',
+			array(),
+			$version);
+	}
+
+	wp_enqueue_style('abnet-admin-settings',
+		$themeUri . '/css/admin/settings.css',
+		array('abnet-font-noir', 'abnet-font-fonseca', 'abnet-font-inter'),
+		$version);
+}
+
+add_action('admin_enqueue_scripts',
+	'abnet_enqueue_settings_page_styles');
+
 function abnet_render_meta_settings_page(): void {
 	if (!current_user_can('manage_options')) {
 		return;

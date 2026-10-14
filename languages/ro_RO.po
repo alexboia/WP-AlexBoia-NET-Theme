@@ -415,16 +415,15 @@ msgstr ""
 "în meta descriere, etichetele pentru rețele sociale și datele structurate, "
 "precum și în titlul paginii, dacă opțiunea este bifată."
 
-#: functions-settings.php:35 functions-settings.php:36
-#: views/meta-settings-page.php:17
+#: functions-settings.php:35 functions-settings.php:36 views/meta-settings-page.php:18
 msgid "Meta & SEO"
 msgstr "Meta și SEO"
 
-#: views/meta-settings-page.php:22
+#: views/meta-settings-page.php:27
 msgid "Author"
 msgstr "Autor"
 
-#: views/meta-settings-page.php:23
+#: views/meta-settings-page.php:28
 msgid ""
 "The person behind the blog. Search engines see them as the publisher of all "
 "articles and as the author of the articles written by the user below."
@@ -433,47 +432,47 @@ msgstr ""
 "tuturor articolelor și ca autor al articolelor scrise de utilizatorul de mai "
 "jos."
 
-#: views/meta-settings-page.php:27
+#: views/meta-settings-page.php:32
 msgid "User"
 msgstr "Utilizator"
 
-#: views/meta-settings-page.php:33 views/meta-settings-page.php:56
+#: views/meta-settings-page.php:38 views/meta-settings-page.php:61
 msgid "&mdash; None &mdash;"
 msgstr "&mdash; Niciunul &mdash;"
 
-#: views/meta-settings-page.php:40
+#: views/meta-settings-page.php:45
 msgid "Full name"
 msgstr "Nume complet"
 
-#: views/meta-settings-page.php:50
+#: views/meta-settings-page.php:55
 msgid "About page"
 msgstr "Pagina „Despre”"
 
-#: views/meta-settings-page.php:59
+#: views/meta-settings-page.php:64
 msgid "Used as the URL of the author and marked up as a profile page."
 msgstr "Folosită ca URL al autorului și marcată ca pagină de profil."
 
-#: views/meta-settings-page.php:63
+#: views/meta-settings-page.php:68
 msgid "Image URL"
 msgstr "URL imagine"
 
-#: views/meta-settings-page.php:73
+#: views/meta-settings-page.php:78
 msgid "Profiles (sameAs)"
 msgstr "Profiluri (sameAs)"
 
-#: views/meta-settings-page.php:79
+#: views/meta-settings-page.php:84
 msgid "Profiles of the same person on other sites, one URL per line."
 msgstr "Profilurile aceleiași persoane pe alte site-uri, câte un URL pe linie."
 
-#: views/meta-settings-page.php:84
+#: views/meta-settings-page.php:91
 msgid "Site"
 msgstr "Site"
 
-#: views/meta-settings-page.php:110
+#: views/meta-settings-page.php:117
 msgid "Meta description"
 msgstr "Meta descriere"
 
-#: views/meta-settings-page.php:116
+#: views/meta-settings-page.php:123
 msgid ""
 "Description of the blog for the front page and archives. When empty, the "
 "tagline is used."
@@ -481,11 +480,11 @@ msgstr ""
 "Descrierea blogului pentru prima pagină și arhive. Dacă e goală, se "
 "folosește sloganul."
 
-#: views/meta-settings-page.php:88
+#: views/meta-settings-page.php:95
 msgid "Site name"
 msgstr "Numele site-ului"
 
-#: views/meta-settings-page.php:95
+#: views/meta-settings-page.php:102
 msgid ""
 "The name search engines show for the site. When empty, the blog title is "
 "used."
@@ -493,10 +492,14 @@ msgstr ""
 "Numele afișat de motoarele de căutare pentru site. Dacă e gol, se folosește "
 "titlul blogului."
 
-#: views/meta-settings-page.php:99
+#: views/meta-settings-page.php:106
 msgid "Alternate name"
 msgstr "Nume alternativ"
 
-#: views/meta-settings-page.php:106
+#: views/meta-settings-page.php:113
 msgid "Used by search engines when the site name is not available."
 msgstr "Folosit de motoarele de căutare când numele site-ului nu poate fi folosit."
+
+#: views/meta-settings-page.php:19
+msgid "How the blog presents itself to search engines and social networks."
+msgstr "Cum se prezintă blogul motoarelor de căutare și rețelelor sociale."

@@ -1,0 +1,139 @@
+/*
+ * Theme settings pages (Settings > Meta & SEO)
+ *
+ * Brings the theme identity (colors, fonts) into the admin settings pages.
+ * The color tokens mirror the :root variables of style.css,
+ * which is not loaded in the admin.
+ */
+
+.abnet-settings {
+	--abnet-accent-main: #1FA4B4;
+	--abnet-accent-untamed: #0A3868;
+	--abnet-accent-untamed-hover: #0E4C8C;
+	--abnet-neutral-content: #e7e7e7;
+	--abnet-muted-content: #686868;
+
+	max-width: 960px;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	color: #444;
+}
+
+/* =Header= */
+
+.abnet-settings-header {
+	margin-bottom: 20px;
+	padding: 6px 0 14px;
+	border-bottom: 3px solid var(--abnet-accent-main);
+}
+
+.abnet-settings .abnet-settings-title {
+	margin: 0 0 4px;
+	padding: 0;
+	font-weight: normal;
+	font-size: 28px;
+	line-height: 1.25;
+	color: var(--abnet-accent-untamed);
+}
+
+.abnet-settings-tagline {
+	margin: 0;
+	font-size: 15px;
+	letter-spacing: 0.02em;
+	color: var(--abnet-accent-untamed);
+}
+
+/* =Sections= */
+
+.abnet-settings-section {
+	margin-bottom: 20px;
+	padding: 4px 24px 8px;
+	background-color: #fff;
+	border: 1px solid var(--abnet-neutral-content);
+	border-left: 3px solid var(--abnet-accent-main);
+	border-radius: 2px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+	border-radius: 5px;
+}
+
+.abnet-settings .abnet-settings-section-title {
+	margin: 18px 0 6px;
+	font-family: 'Inter', sans-serif;
+	font-weight: normal;
+	font-size: 13px;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--abnet-accent-untamed);
+}
+
+.abnet-settings-section-description {
+	max-width: 640px;
+	margin: 0 0 4px;
+	color: var(--abnet-muted-content);
+}
+
+/* =Fields= */
+
+.abnet-settings .form-table th {
+	font-weight: normal;
+	color: var(--abnet-accent-untamed);
+}
+
+.abnet-settings .description {
+	font-style: normal;
+	color: var(--abnet-muted-content);
+}
+
+.abnet-settings input[type="text"],
+.abnet-settings input[type="url"],
+.abnet-settings textarea,
+.abnet-settings select {
+	border-color: #ccc;
+	border-radius: 2px;
+}
+
+.abnet-settings input[type="text"]:focus,
+.abnet-settings input[type="url"]:focus,
+.abnet-settings textarea:focus,
+.abnet-settings select:focus {
+	border-color: var(--abnet-accent-main);
+	box-shadow: 0 0 0 1px var(--abnet-accent-main);
+	outline: 2px solid transparent;
+}
+
+.abnet-settings .code,
+.abnet-settings textarea.code {
+	font-family: Consolas, Monaco, 'Lucida Console', monospace;
+}
+
+/* =Actions= */
+
+.abnet-settings .button-primary {
+	padding: 0 20px;
+	background-color: var(--abnet-accent-untamed);
+	border-color: var(--abnet-accent-untamed);
+	border-radius: 2px;
+	color: #fff;
+	text-shadow: none;
+	box-shadow: none;
+}
+
+.abnet-settings .button-primary:hover,
+.abnet-settings .button-primary:focus {
+	background-color: var(--abnet-accent-untamed-hover);
+	border-color: var(--abnet-accent-untamed-hover);
+	color: #fff;
+}
+
+.abnet-settings .button-primary:focus {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--abnet-accent-main);
+}
+
+textarea{
+	resize: none;
+}
+
+@media screen and (max-width: 782px) {
+	.abnet-settings-section {
+		padding: 4px 12px 8px;
+	}
+}

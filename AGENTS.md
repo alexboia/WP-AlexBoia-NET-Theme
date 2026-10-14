@@ -27,7 +27,8 @@ This file applies to the `wp-alexboia-net` theme ("Wp AbNet"), the theme of the 
 | `views/` | PHP views (admin markup such as the SEO metabox), rendered with `abnet_render_view($name, $viewModel)` |
 | `includes/ViewModel/` | Explicit view models for the views, implementing the `ViewModel` marker interface |
 | `js/`, `js/admin/` | Front-end scripts (navigation, customizer) and editor plug-ins |
-| `css/`, `genericicons/`, `img/` | Auxiliary styles, icon font, images |
+| `css/`, `genericicons/`, `img/` | Auxiliary styles, fonts (`css/fonts/`), icon font, images |
+| `css/admin/` | Admin styles; `settings.css` gives the theme settings pages the theme identity (scope: `.abnet-settings`, loaded only on those pages) |
 | `languages/` | `ro_RO.po`/`ro_RO.mo` translations for the `abnet` text domain |
 | `docs/` | Developer documentation and examples for the schema.org layer |
 

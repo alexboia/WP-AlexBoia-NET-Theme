@@ -124,7 +124,10 @@ class SchemaOrg {
 	 * @return string
 	 */
 	public function toJsonLd(): string {
-		return wp_json_encode($this->_properties, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_PRETTY_PRINT);
+		return wp_json_encode($this->_properties, 		
+			JSON_UNESCAPED_UNICODE 
+				| JSON_HEX_TAG 
+				| JSON_PRETTY_PRINT);
 	}
 
 	/**
