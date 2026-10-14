@@ -10,7 +10,9 @@ final readonly class ArticleInfo {
 		public string $datePublished,
 		public string $dateModified = '',
 		public string $id = '',
-		public string $publisherId = ''
+		public string $publisherId = '',
+		public string $authorId = '',
+		public string $authorUrl = ''
 	){
 		return;
 	}

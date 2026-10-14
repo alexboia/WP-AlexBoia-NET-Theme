@@ -18,8 +18,10 @@ use AbNetTheme\Model\SchemaOrg\LocalBusinessInfo;
 use AbNetTheme\Model\SchemaOrg\OrganizationInfo;
 use AbNetTheme\Model\SchemaOrg\PersonInfo;
 use AbNetTheme\Model\SchemaOrg\ProductInfo;
+use AbNetTheme\Model\SchemaOrg\ProfilePageInfo;
 use AbNetTheme\Model\SchemaOrg\RecipeInfo;
 use AbNetTheme\Model\SchemaOrg\WebPageInfo;
+use AbNetTheme\Model\SchemaOrg\WebSiteInfo;
 
 if (!defined('ABSPATH')) {
 	exit;
@@ -48,12 +50,15 @@ class SchemaOrgBuilder {
 			$article->setProperty('dateModified', $articleInfo->dateModified);
 		}
 
-		// Author
-		$author = self::createPerson(new PersonInfo($articleInfo->authorName));
+		// Author: when an identifier is given, the node also references
+		//	the person node emitted separately
+		$author = self::createPerson(new PersonInfo($articleInfo->authorName,
+			$articleInfo->authorUrl,
+			id: $articleInfo->authorId));
 		$article->setProperty('author', $author);
 
-		// Publisher: reference an organization node emitted separately,
-		//	or embed one built from the blog information
+		// Publisher: reference a node emitted separately,
+		//	or embed an organization built from the blog information
 		if (!empty($articleInfo->publisherId)) {
 			$article->setProperty('publisher', array('@id' => $articleInfo->publisherId));
 		} else {
@@ -100,10 +105,16 @@ class SchemaOrgBuilder {
 
 	/**
 	 * Create a Person schema
+	 *
+	 * @param PersonInfo $personInfo The person information.
 	 * @return SchemaOrg
 	 */
 	public static function createPerson(PersonInfo $personInfo): SchemaOrg {
 		$person = new SchemaOrg('Person');
+
+		if (!empty($personInfo->id)) {
+			$person->setProperty('@id', $personInfo->id);
+		}
 
 		$person->setProperty('name', $personInfo->name);
 
@@ -115,7 +126,43 @@ class SchemaOrgBuilder {
 			$person->setProperty('email', $personInfo->email);
 		}
 
+		if (!empty($personInfo->imageUrl)) {
+			$person->setProperty('image', $personInfo->imageUrl);
+		}
+
+		if (!empty($personInfo->sameAs)) {
+			$person->setProperty('sameAs', array_values($personInfo->sameAs));
+		}
+
 		return $person;
+	}
+
+	/**
+	 * Create a ProfilePage schema
+	 *
+	 * @param ProfilePageInfo $profilePageInfo The profile page information.
+	 * @return SchemaOrg
+	 */
+	public static function createProfilePage(ProfilePageInfo $profilePageInfo): SchemaOrg {
+		$page = new SchemaOrg('ProfilePage');
+
+		if (!empty($profilePageInfo->id)) {
+			$page->setProperty('@id', $profilePageInfo->id);
+		}
+
+		$page->setProperty('name', $profilePageInfo->name);
+		$page->setProperty('url', $profilePageInfo->url);
+		$page->setProperty('mainEntity', array('@id' => $profilePageInfo->mainEntityId));
+
+		if (!empty($profilePageInfo->dateCreated)) {
+			$page->setProperty('dateCreated', $profilePageInfo->dateCreated);
+		}
+
+		if (!empty($profilePageInfo->dateModified)) {
+			$page->setProperty('dateModified', $profilePageInfo->dateModified);
+		}
+
+		return $page;
 	}
 
 	/**
@@ -194,6 +241,42 @@ class SchemaOrgBuilder {
 		$post->setProperty('@type', 'BlogPosting');
 
 		return $post;
+	}
+
+	/**
+	 * Create a WebSite schema
+	 *
+	 * @param WebSiteInfo $webSiteInfo The site information.
+	 * @return SchemaOrg
+	 */
+	public static function createWebSite(WebSiteInfo $webSiteInfo): SchemaOrg {
+		$site = new SchemaOrg('WebSite');
+
+		if (!empty($webSiteInfo->id)) {
+			$site->setProperty('@id', $webSiteInfo->id);
+		}
+
+		$site->setProperty('name', $webSiteInfo->name);
+
+		if (!empty($webSiteInfo->alternateName)) {
+			$site->setProperty('alternateName', $webSiteInfo->alternateName);
+		}
+
+		$site->setProperty('url', $webSiteInfo->url);
+
+		if (!empty($webSiteInfo->description)) {
+			$site->setProperty('description', $webSiteInfo->description);
+		}
+
+		if (!empty($webSiteInfo->publisherId)) {
+			$site->setProperty('publisher', array('@id' => $webSiteInfo->publisherId));
+		}
+
+		if (!empty($webSiteInfo->language)) {
+			$site->setProperty('inLanguage', $webSiteInfo->language);
+		}
+
+		return $site;
 	}
 
 	/**

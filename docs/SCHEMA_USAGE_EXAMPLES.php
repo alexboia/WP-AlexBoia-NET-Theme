@@ -227,8 +227,9 @@ add_filter('abnet_schema_org', function($schemaManager, $context) {
 
 // 13b. Filtering the final properties of a generated schema
 // ==========================================================
-// Also available: wp_abnet_schema_org_properties_organization ($properties, $context)
-// and wp_abnet_schema_org_properties_breadcrumbs ($properties, $breadcrumbs, $context).
+// Also available: wp_abnet_schema_org_properties_person ($properties, $context),
+// wp_abnet_schema_org_properties_breadcrumbs ($properties, $breadcrumbs, $context)
+// and wp_abnet_schema_org_properties_profile_page ($properties, $post, $context).
 add_filter('wp_abnet_schema_org_properties_blog_posting', function(array $properties, WP_Post $post, $context) {
 	$properties['inLanguage'] = get_bloginfo('language');
 	return $properties;

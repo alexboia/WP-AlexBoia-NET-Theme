@@ -17,10 +17,15 @@ This file applies to the `wp-alexboia-net` theme ("Wp AbNet"), the theme of the 
 | `autoload.php` | Autoloader mapping the `AbNetTheme\` namespace to `includes/` (PSR-4 style) |
 | `functions-meta.php` | Hooks `wp_head` to output Open Graph tags and schema.org data; exposes their filters |
 | `functions-admin.php` | Admin/editor customizations (TinyMCE, Enlighter code block buttons) |
+| `functions-settings.php` | Settings > Meta & SEO page (registration, rendering) |
+| `includes/Settings/` | `MetaSettings`: configurable meta attributes (author person, about page, `sameAs`, site name, blog meta description) with their defaults |
+| `functions-seo.php` | SEO title/description metabox (post meta `_abnet_seo_title`, `_abnet_seo_description`) and the filters that apply them |
 | `includes/OGMetaTags.php`, `includes/SchemaOrgManager.php` | Generation of OG meta tags and schema.org nodes for the current page |
 | `includes/Model/` | `ThemeHookContext` (page context), `MetaTag`, `SchemaOrg` (JSON-LD node), `SchemaOrgBuilder` (factories) |
 | `includes/Model/SchemaOrg/` | Immutable `*Info` argument objects for the builder factories |
 | `*.php` in the root, `content-*.php`, `page-templates/` | Template hierarchy files and template parts, mostly inherited from Twenty Twelve |
+| `views/` | PHP views (admin markup such as the SEO metabox), rendered with `abnet_render_view($name, $viewModel)` |
+| `includes/ViewModel/` | Explicit view models for the views, implementing the `ViewModel` marker interface |
 | `js/`, `js/admin/` | Front-end scripts (navigation, customizer) and editor plug-ins |
 | `css/`, `genericicons/`, `img/` | Auxiliary styles, icon font, images |
 | `languages/` | `ro_RO.po`/`ro_RO.mo` translations for the `abnet` text domain |
@@ -44,14 +49,16 @@ This file applies to the `wp-alexboia-net` theme ("Wp AbNet"), the theme of the 
   - Put the bootstrap guard `if (!defined('ABSPATH')) { exit; }` after the namespace/`use` block, as in the existing classes.
 - **Global functions:** prefix them with `abnet_`; use `_abnet_` for internal helpers.
 - **Guard files:** every directory carries an `index.php` guard file (`<?php exit;`). Add one when creating a new directory.
+- **Views:** markup goes into `views/<name>.php`, not into functions. Each view gets an explicit view model: a `final readonly` class in `includes/ViewModel/` (named `<Name>ViewModel`) that implements `AbNetTheme\ViewModel\ViewModel`, passed to `abnet_render_view()` and available in the view as `$data`. Declare it with a `@var <Name>ViewModel $data` docblock at the top of the view. Do not pass `stdClass` or arrays.
+- **Configurable values:** site-level values that may change (names, URLs, profiles, descriptions) belong in a settings class under `includes/Settings/` with a default value, editable from an admin settings page, not in constants or hardcoded strings.
 - **Builder arguments:** pass arguments to `SchemaOrgBuilder` factories as `final readonly` `*Info` objects in `includes/Model/SchemaOrg/`, not as long positional parameter lists.
 
 ### Hooks
 
-- **Existing hooks:** theme hooks use the `abnet_` prefix (`abnet_og_meta_tags`, `abnet_schema_org`, `abnet_og_post_description`, ...). The schema property filters `wp_abnet_schema_org_properties_organization`, `..._breadcrumbs` and `..._blog_posting` use a `wp_abnet_` prefix by deliberate choice. Preserve existing names, argument order and accepted-argument counts, because plug-ins depend on them.
+- **Existing hooks:** theme hooks use the `abnet_` prefix (`abnet_og_meta_tags`, `abnet_schema_org`, `abnet_og_post_description`, ...). The schema property filters `wp_abnet_schema_org_properties_person`, `..._breadcrumbs`, `..._blog_posting`, `..._profile_page` and `..._website` use a `wp_abnet_` prefix by deliberate choice. Preserve existing names, argument order and accepted-argument counts, because plug-ins depend on them.
 - **Documentation:** document each `apply_filters`/`do_action` call immediately above it with its purpose, `@since WP AbNet 1.0` and ordered `@param` entries.
 - **Theme and plug-ins:** the theme does not know about specific plug-ins. It only exposes hooks; plug-ins integrate by hooking into them. For instance, WP Trip Summary adds `contentLocation` to the BlogPosting through `wp_abnet_schema_org_properties_blog_posting`. Do not add plug-in-specific logic to the theme.
-- **`@id` identifiers:** schema.org nodes that others reference keep stable values: `<home url>/#organization` and `<permalink>#article`. Changing them breaks references emitted by plug-ins.
+- **`@id` identifiers:** schema.org nodes that others reference keep stable values: `<home url>/#author` (the person behind the blog, also the publisher), `<home url>/#website` and `<permalink>#article`. Changing them breaks references emitted by plug-ins.
 
 ### Other assets
 

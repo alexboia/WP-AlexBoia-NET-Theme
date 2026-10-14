@@ -25,6 +25,24 @@
 require_once __DIR__ . '/autoload.php';
 require_once __DIR__ . '/functions-meta.php';
 require_once __DIR__ . '/functions-admin.php';
+require_once __DIR__ . '/functions-seo.php';
+require_once __DIR__ . '/functions-settings.php';
+
+/**
+ * Render a view from the theme's views directory.
+ * The view receives its explicit view model as $data.
+ *
+ * @since WP AbNet 1.0
+ *
+ * @param string                                $viewName The view file name, without the .php extension.
+ * @param \AbNetTheme\ViewModel\ViewModel|null $data     The view model.
+ */
+function abnet_render_view(string $viewName, ?\AbNetTheme\ViewModel\ViewModel $data = null): void {
+	$viewFile = __DIR__ . '/views/' . $viewName . '.php';
+	if (is_readable($viewFile)) {
+		require $viewFile;
+	}
+}
 
 /**
  * Sets up the content width value based on the theme's design and stylesheet.

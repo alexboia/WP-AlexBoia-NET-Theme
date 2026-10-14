@@ -6,13 +6,11 @@ if (!defined('ABSPATH')) {
 use AbNetTheme\Model\ThemeHookContext;
 use AbNetTheme\OGMetaTags;
 use AbNetTheme\SchemaOrgManager;
-
-function _abnet_default_blog_meta_description(): string {
-	return 'Jurnal de călătorii, biciclete, tehnologie și observații personale, scris cu umor, curiozitate și ceva parapon.';
-}
+use AbNetTheme\Settings\MetaSettings;
 
 function abnet_og_blog_description(string $blogDescription, ThemeHookContext $context): string {
-	return _abnet_default_blog_meta_description();
+	$metaDescription = (new MetaSettings())->getBlogMetaDescription();
+	return $metaDescription !== '' ? $metaDescription : $blogDescription;
 }
 
 add_filter('abnet_og_blog_description',

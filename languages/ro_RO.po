@@ -380,3 +380,123 @@ msgstr "Front Page Template"
 #. Template Name of the plugin/theme
 msgid "Full-width Page Template, No Sidebar"
 msgstr "Full-width Page Template, No Sidebar"
+
+#: functions-seo.php:59
+msgid "SEO"
+msgstr "SEO"
+
+#: views/seo-metabox.php:19
+msgid "SEO Title"
+msgstr "Titlu SEO"
+
+#: views/seo-metabox.php:25
+msgid "Recommended: up to 60 characters."
+msgstr "Recomandat: maximum 60 de caractere."
+
+#: views/seo-metabox.php:38
+msgid "SEO Description"
+msgstr "Descriere SEO"
+
+#: views/seo-metabox.php:43
+msgid "Recommended: up to 160 characters."
+msgstr "Recomandat: maximum 160 de caractere."
+
+#: views/seo-metabox.php:34
+msgid "Also use the SEO title as the page title (browser tab)"
+msgstr "Folosește titlul SEO și ca titlu al paginii (tab-ul browserului)"
+
+#: views/seo-metabox.php:46
+msgid ""
+"Optional. When filled in, they replace the post title and excerpt in the "
+"meta description, social media tags and structured data, as well as in the "
+"page title, if enabled."
+msgstr ""
+"Opțional. Dacă sunt completate, înlocuiesc titlul și rezumatul articolului "
+"în meta descriere, etichetele pentru rețele sociale și datele structurate, "
+"precum și în titlul paginii, dacă opțiunea este bifată."
+
+#: functions-settings.php:35 functions-settings.php:36
+#: views/meta-settings-page.php:17
+msgid "Meta & SEO"
+msgstr "Meta și SEO"
+
+#: views/meta-settings-page.php:22
+msgid "Author"
+msgstr "Autor"
+
+#: views/meta-settings-page.php:23
+msgid ""
+"The person behind the blog. Search engines see them as the publisher of all "
+"articles and as the author of the articles written by the user below."
+msgstr ""
+"Persoana din spatele blogului. Motoarele de căutare o văd ca editor al "
+"tuturor articolelor și ca autor al articolelor scrise de utilizatorul de mai "
+"jos."
+
+#: views/meta-settings-page.php:27
+msgid "User"
+msgstr "Utilizator"
+
+#: views/meta-settings-page.php:33 views/meta-settings-page.php:56
+msgid "&mdash; None &mdash;"
+msgstr "&mdash; Niciunul &mdash;"
+
+#: views/meta-settings-page.php:40
+msgid "Full name"
+msgstr "Nume complet"
+
+#: views/meta-settings-page.php:50
+msgid "About page"
+msgstr "Pagina „Despre”"
+
+#: views/meta-settings-page.php:59
+msgid "Used as the URL of the author and marked up as a profile page."
+msgstr "Folosită ca URL al autorului și marcată ca pagină de profil."
+
+#: views/meta-settings-page.php:63
+msgid "Image URL"
+msgstr "URL imagine"
+
+#: views/meta-settings-page.php:73
+msgid "Profiles (sameAs)"
+msgstr "Profiluri (sameAs)"
+
+#: views/meta-settings-page.php:79
+msgid "Profiles of the same person on other sites, one URL per line."
+msgstr "Profilurile aceleiași persoane pe alte site-uri, câte un URL pe linie."
+
+#: views/meta-settings-page.php:84
+msgid "Site"
+msgstr "Site"
+
+#: views/meta-settings-page.php:110
+msgid "Meta description"
+msgstr "Meta descriere"
+
+#: views/meta-settings-page.php:116
+msgid ""
+"Description of the blog for the front page and archives. When empty, the "
+"tagline is used."
+msgstr ""
+"Descrierea blogului pentru prima pagină și arhive. Dacă e goală, se "
+"folosește sloganul."
+
+#: views/meta-settings-page.php:88
+msgid "Site name"
+msgstr "Numele site-ului"
+
+#: views/meta-settings-page.php:95
+msgid ""
+"The name search engines show for the site. When empty, the blog title is "
+"used."
+msgstr ""
+"Numele afișat de motoarele de căutare pentru site. Dacă e gol, se folosește "
+"titlul blogului."
+
+#: views/meta-settings-page.php:99
+msgid "Alternate name"
+msgstr "Nume alternativ"
+
+#: views/meta-settings-page.php:106
+msgid "Used by search engines when the site name is not available."
+msgstr "Folosit de motoarele de căutare când numele site-ului nu poate fi folosit."

@@ -15,10 +15,14 @@ namespace AbNetTheme;
 use AbNetTheme\Model\SchemaOrg;
 use AbNetTheme\Model\SchemaOrg\ArticleInfo;
 use AbNetTheme\Model\SchemaOrg\BreadcrumbItemInfo;
-use AbNetTheme\Model\SchemaOrg\OrganizationInfo;
+use AbNetTheme\Model\SchemaOrg\PersonInfo;
+use AbNetTheme\Model\SchemaOrg\ProfilePageInfo;
 use AbNetTheme\Model\SchemaOrg\WebPageInfo;
+use AbNetTheme\Model\SchemaOrg\WebSiteInfo;
 use AbNetTheme\Model\SchemaOrgBuilder;
 use AbNetTheme\Model\ThemeHookContext;
+use AbNetTheme\Settings\MetaSettings;
+use Hamcrest\Text\StringContainsIgnoringCase;
 
 if (!defined('ABSPATH')) {
 	exit;
@@ -31,6 +35,13 @@ class SchemaOrgManager {
 	 * @var ThemeHookContext
 	 */
 	private ThemeHookContext $_context;
+
+	/**
+	 * Configurable meta settings
+	 *
+	 * @var MetaSettings
+	 */
+	private MetaSettings $_metaSettings;
 
 	/**
 	 * Schema objects to render
@@ -46,6 +57,7 @@ class SchemaOrgManager {
 	 */
 	public function __construct(ThemeHookContext $context) {
 		$this->_context = $context;
+		$this->_metaSettings = new MetaSettings();
 		$this->_generateSchemas();
 	}
 
@@ -55,8 +67,8 @@ class SchemaOrgManager {
 	 * @return void
 	 */
 	private function _generateSchemas(): void {
-		// Always add organization schema
-		$this->_addOrganizationSchema();
+		// Always add the schema of the person behind the blog (author and publisher)
+		$this->_addPersonSchema();
 
 		// Add breadcrumb schema
 		$this->_addBreadcrumbSchema();
@@ -72,43 +84,44 @@ class SchemaOrgManager {
 	}
 
 	/**
-	 * Add organization schema
+	 * Add the schema of the person behind the blog
+	 *
+	 * The node is referenced by @id as the publisher of all articles
+	 * and as the author of the articles written by the configured user.
 	 *
 	 * @return void
 	 */
-	private function _addOrganizationSchema(): void {
-		$settings = $this->_context->getBlogSettings();
+	private function _addPersonSchema(): void {
+		$personInfo = new PersonInfo($this->_metaSettings->getPersonName(),
+			$this->_metaSettings->getAboutPageUrl(),
+			id: $this->_getPersonId(),
+			imageUrl: $this->_metaSettings->getPersonImageUrl(),
+			sameAs: $this->_metaSettings->getPersonSameAs());
 
-		$orgInfo = new OrganizationInfo($settings['blog_name'],
-			$settings['blog_description'],
-			$settings['blog_url'],
-			id: $this->_getOrganizationId());
-
-		$org = SchemaOrgBuilder::createOrganization(
-			$orgInfo
-		);
+		$person = SchemaOrgBuilder::createPerson($personInfo);
 
 		/**
-		 * Filters the final properties of the Organization schema
+		 * Filters the final properties of the Person schema
+		 * describing the person behind the blog
 		 *
 		 * @since WP AbNet 1.0
 		 *
 		 * @param array            $properties The schema properties, including @context and @type.
 		 * @param ThemeHookContext $context    The theme hook context.
 		 */
-		$this->_schemas[] = $this->_filterSchemaProperties($org,
-			'wp_abnet_schema_org_properties_organization',
+		$this->_schemas[] = $this->_filterSchemaProperties($person,
+			'wp_abnet_schema_org_properties_person',
 			$this->_context);
 	}
 
 	/**
-	 * Get the JSON-LD node identifier of the organization schema
+	 * Get the JSON-LD node identifier of the person schema
 	 *
 	 * @return string
 	 */
-	private function _getOrganizationId(): string {
+	private function _getPersonId(): string {
 		$settings = $this->_context->getBlogSettings();
-		return trailingslashit($settings['blog_url']) . '#organization';
+		return trailingslashit($settings['blog_url']) . '#author';
 	}
 
 	/**
@@ -222,6 +235,11 @@ class SchemaOrgManager {
 			return;
 		}
 
+		if ($this->_isAboutPage($post)) {
+			$this->_addProfilePageSchema($post);
+			return;
+		}
+
 		// Get image
 		$imageUrl = $this->_getPostImageUrl($post);
 		if (!$imageUrl) {
@@ -235,6 +253,7 @@ class SchemaOrgManager {
 		}
 
 		$author_name = get_the_author_meta('display_name', $post->post_author);
+		$isWrittenByPerson = $this->_isWrittenByPerson($post);
 		$datePublished = mysql2date(\DateTime::ATOM, $post->post_date_gmt, false);
 		$dateModified = $post->post_modified_gmt !== $post->post_date_gmt
 			? mysql2date(\DateTime::ATOM, $post->post_modified_gmt, false)
@@ -244,11 +263,15 @@ class SchemaOrgManager {
 			$post->post_title,
 			$description,
 			$imageUrl,
-			$author_name ?: get_bloginfo('name'),
+			$isWrittenByPerson
+				? $this->_metaSettings->getPersonName()
+				: ($author_name ?: get_bloginfo('name')),
 			$datePublished,
 			$dateModified,
 			id: get_permalink($post) . '#article',
-			publisherId: $this->_getOrganizationId()
+			publisherId: $this->_getPersonId(),
+			authorId: $isWrittenByPerson ? $this->_getPersonId() : '',
+			authorUrl: $isWrittenByPerson ? $this->_metaSettings->getAboutPageUrl() : ''
 		);
 
 		// Determine article type
@@ -272,6 +295,66 @@ class SchemaOrgManager {
 		 */
 		$this->_schemas[] = $this->_filterSchemaProperties($articleSchema,
 			'wp_abnet_schema_org_properties_blog_posting',
+			$post,
+			$this->_context);
+	}
+
+	/**
+	 * Check whether the post is the configured about page
+	 *
+	 * @param \WP_Post $post The post object.
+	 * @return bool
+	 */
+	private function _isAboutPage(\WP_Post $post): bool {
+		$aboutPageId = $this->_metaSettings->getAboutPageId();
+		return $aboutPageId > 0 && $post->ID === $aboutPageId;
+	}
+
+	/**
+	 * Check whether the post was written by the user represented by the person schema
+	 *
+	 * @param \WP_Post $post The post object.
+	 * @return bool
+	 */
+	private function _isWrittenByPerson(\WP_Post $post): bool {
+		$personUserId = $this->_metaSettings->getPersonUserId();
+		return $personUserId > 0 && (int)$post->post_author === $personUserId;
+	}
+
+	/**
+	 * Add the profile page schema for the about page
+	 *
+	 * @param \WP_Post $post The about page.
+	 * @return void
+	 */
+	private function _addProfilePageSchema(\WP_Post $post): void {
+		$permalink = get_permalink($post);
+		$dateModified = $post->post_modified_gmt !== $post->post_date_gmt
+			? mysql2date(\DateTime::ATOM, $post->post_modified_gmt, false)
+			: '';
+
+		$profilePageInfo = new ProfilePageInfo(
+			$post->post_title,
+			$permalink,
+			$this->_getPersonId(),
+			mysql2date(\DateTime::ATOM, $post->post_date_gmt, false),
+			$dateModified,
+			id: $permalink . '#profilepage'
+		);
+
+		$profilePage = SchemaOrgBuilder::createProfilePage($profilePageInfo);
+
+		/**
+		 * Filters the final properties of the ProfilePage schema of the about page
+		 *
+		 * @since WP AbNet 1.0
+		 *
+		 * @param array            $properties The schema properties, including @context and @type.
+		 * @param \WP_Post         $post       The about page.
+		 * @param ThemeHookContext $context    The theme hook context.
+		 */
+		$this->_schemas[] = $this->_filterSchemaProperties($profilePage,
+			'wp_abnet_schema_org_properties_profile_page',
 			$post,
 			$this->_context);
 	}
@@ -303,17 +386,59 @@ class SchemaOrgManager {
 	/**
 	 * Add website schema for front page
 	 *
+	 * Google reads the site name shown in search results
+	 * from this node, on the front page only.
+	 *
 	 * @return void
 	 */
 	private function _addWebSiteSchema(): void {
 		$settings = $this->_context->getBlogSettings();
+		$description = $this->_metaSettings->getBlogMetaDescription();
 
-		$website = new SchemaOrg('WebSite');
-		$website->setProperty('name', $settings['blog_name']);
-		$website->setProperty('url', $settings['blog_url']);
-		$website->setProperty('description', $settings['blog_description']);
+		$webSiteInfo = new WebSiteInfo(
+			$this->_metaSettings->getSiteName(),
+			trailingslashit($settings['blog_url']),
+			$description !== '' ? $description : $settings['blog_description'],
+			$this->_metaSettings->getSiteAlternateName(),
+			$this->_getWebSiteId(),
+			$this->_getPersonId(),
+			$this->_getWebSiteLanguage()
+		);
 
-		$this->_schemas[] = $website;
+		$website = SchemaOrgBuilder::createWebSite($webSiteInfo);
+
+		/**
+		 * Filters the final properties of the WebSite schema of the front page
+		 *
+		 * @since WP AbNet 1.0
+		 *
+		 * @param array            $properties The schema properties, including @context and @type.
+		 * @param ThemeHookContext $context    The theme hook context.
+		 */
+		$this->_schemas[] = $this->_filterSchemaProperties($website,
+			'wp_abnet_schema_org_properties_website',
+			$this->_context);
+	}
+
+	/**
+	 * Get the JSON-LD node identifier of the website schema
+	 *
+	 * @return string
+	 */
+	private function _getWebSiteId(): string {
+		$settings = $this->_context->getBlogSettings();
+		return trailingslashit($settings['blog_url']) . '#website';
+	}
+
+	private function _getWebSiteLanguage(): string {
+		$locale = get_locale();
+		if (empty($locale)) {
+			return apply_filters('abnet_schema_org_website_default_language', 
+				'en-US', 
+				$this->_context);
+		} else {
+			return str_replace('_', '-', $locale);
+		}
 	}
 
 	/**

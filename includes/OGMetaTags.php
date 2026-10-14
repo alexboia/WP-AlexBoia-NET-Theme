@@ -99,15 +99,15 @@ class OGMetaTags {
 		$settings = $this->_context->getBlogSettings();
 
 		// Basic post information
+		$title = $this->_computePostTitle($post);
 		$this->_tags[] = new MetaTag(
-			'og:title', 
-			$post->post_title, 
+			'og:title',
+			$title,
 			'og:title'
 		);
 		$this->_tags[] = new MetaTag(
-			'twitter:title', 
-			$post->post_title, 
-			'twitter:title'
+			'twitter:title',
+			$title
 		);
 
 		$this->_tags[] = new MetaTag(
@@ -125,15 +125,19 @@ class OGMetaTags {
 		$description = $this->_computePostDescription($post);
 		if (!empty($description)) {
 			$this->_tags[] = new MetaTag(
-				'og:description', 
+				'description',
+				$description
+			);
+
+			$this->_tags[] = new MetaTag(
+				'og:description',
 				$description, 
 				'og:description'
 			);
 
 			$this->_tags[] = new MetaTag(
 				'twitter:description', 
-				$description, 
-				'twitter:description'
+				$description
 			);
 		}
 
@@ -165,7 +169,7 @@ class OGMetaTags {
 		// Author
 		$authorName = get_the_author_meta('display_name', $post->post_author);
 		if (!empty($authorName)) {
-			$this->_tags[] = new MetaTag('author', $authorName, 'author');
+			$this->_tags[] = new MetaTag('author', $authorName);
 		}
 	}
 
@@ -241,6 +245,27 @@ class OGMetaTags {
 		return apply_filters('abnet_og_blog_description', 
 			$description, 
 			$this->_context);
+	}
+
+	/**
+	 * Get post title
+	 *
+	 * @param \WP_Post $post The post object.
+	 */
+	private function _computePostTitle(\WP_Post $post): string {
+		/**
+		 * Filters the title used for the post's Open Graph and Twitter title tags
+		 *
+		 * @since WP AbNet 1.0
+		 *
+		 * @param string           $title   The post title.
+		 * @param ThemeHookContext $context The theme hook context.
+		 * @param \WP_Post         $post    The post object.
+		 */
+		return apply_filters('abnet_og_post_title',
+			$post->post_title,
+			$this->_context,
+			$post);
 	}
 
 	/**

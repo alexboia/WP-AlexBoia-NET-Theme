@@ -36,6 +36,8 @@ Each method takes a single immutable info object (namespace `AbNetTheme\Model\Sc
 - `createBlogPosting(ArticleInfo)` - Blog Post
 - `createOrganization(OrganizationInfo)` - Organization
 - `createPerson(PersonInfo)` - Person
+- `createProfilePage(ProfilePageInfo)` - Profile page (about page of a person)
+- `createWebSite(WebSiteInfo)` - Web Site
 - `createLocalBusiness(LocalBusinessInfo)` - Local Business
 - `createBreadcrumbList(BreadcrumbItemInfo[])` - Breadcrumb Navigation
 - `createWebPage(WebPageInfo)` - Web Page
@@ -65,7 +67,7 @@ Automatically generates appropriate schemas based on page context.
 **Features:**
 - Auto-detects current page type (single, archive, home)
 - Generates breadcrumbs automatically
-- Includes organization schema on all pages
+- Includes the schema of the person behind the blog on all pages
 - Integrates with `ThemeHookContext`
 - Filterable via `abnet_schema_org` hook
 
@@ -106,9 +108,10 @@ The schema.org system is automatically integrated into the theme:
    - `abnet_output_schema_org()` outputs schemas to `wp_head` at priority 2
 
 2. **Schema output on every page:**
-   - Organization schema with blog info
+   - Person schema of the blog's author/publisher (configured in Settings > Meta & SEO)
    - Breadcrumb schema (when applicable)
-   - Article schema (for posts/pages)
+   - ProfilePage schema (for the configured about page)
+   - Article schema (for other posts/pages)
    - Archive schema (for category, tag, author pages)
    - Website schema (for front page)
 
@@ -117,9 +120,11 @@ The schema.org system is automatically integrated into the theme:
 | Filter | Value | Extra arguments |
 | --- | --- | --- |
 | `abnet_schema_org` | `SchemaOrgManager` | `ThemeHookContext $context` |
-| `wp_abnet_schema_org_properties_organization` | Final Organization properties (`array`) | `ThemeHookContext $context` |
+| `wp_abnet_schema_org_properties_person` | Final Person properties (`array`) | `ThemeHookContext $context` |
 | `wp_abnet_schema_org_properties_breadcrumbs` | Final BreadcrumbList properties (`array`) | `BreadcrumbItemInfo[] $breadcrumbs`, `ThemeHookContext $context` |
 | `wp_abnet_schema_org_properties_blog_posting` | Final BlogPosting properties (`array`) | `WP_Post $post`, `ThemeHookContext $context` |
+| `wp_abnet_schema_org_properties_website` | Final WebSite properties (`array`, front page only) | `ThemeHookContext $context` |
+| `wp_abnet_schema_org_properties_profile_page` | Final ProfilePage properties (`array`) | `WP_Post $post` (the about page), `ThemeHookContext $context` |
 
 The `wp_abnet_schema_org_properties_*` filters receive the complete property array of a schema
 (including `@context` and `@type`) right before it is added to the manager. The schema is rebuilt
@@ -176,12 +181,36 @@ Schemas that other nodes refer to get a stable `@id`, so they can be referenced 
 
 | Node | `@id` |
 | --- | --- |
-| Organization | `<home url>/#organization` |
+| Person (author and publisher) | `<home url>/#author` |
+| WebSite (front page only) | `<home url>/#website` |
 | BlogPosting | `<permalink>#article` |
+| ProfilePage | `<about page permalink>#profilepage` |
 
-The BlogPosting refers to the organization as its publisher with `{"@id": "<home url>/#organization"}`.
-`OrganizationInfo::$id`, `ArticleInfo::$id` and `ArticleInfo::$publisherId` control this when using the builder directly;
-without `publisherId`, the article embeds a publisher built from the blog information.
+- Every BlogPosting refers to the person as its publisher with `{"@id": "<home url>/#author"}`.
+- Posts written by the configured user also carry the same `@id` in their `author` (together with its name and URL);
+  posts by other users get an inline `Person` with the user's display name.
+- The ProfilePage of the about page refers to the person as its `mainEntity`.
+- The WebSite node refers to the person as its publisher. Google reads the site name shown in search results
+  from it, so it is only output on the front page.
+
+`PersonInfo::$id`, `ArticleInfo::$id`, `ArticleInfo::$publisherId` and `ArticleInfo::$authorId` control this when using the builder directly;
+without `publisherId`, the article embeds an organization publisher built from the blog information.
+
+## Settings
+
+The configurable attributes are edited in **Settings > Meta & SEO** and read through `AbNetTheme\Settings\MetaSettings`
+(option `abnet_meta_settings`). Values that were never saved fall back to defaults:
+
+| Setting | Default |
+| --- | --- |
+| User represented by the person | Author of the page with the `despre` slug |
+| Full name | Blog name |
+| About page | Page with the `despre` slug |
+| Image URL | (empty) |
+| Profiles (`sameAs`) | `https://substack.com/@alexandruboia` |
+| Site name | Blog name |
+| Alternate site name | `AlexBoia.NET` |
+| Meta description (front page, archives, WebSite node) | Built-in blog description |
 
 ### Linking nodes from plug-ins
 
