@@ -97,4 +97,20 @@ class ThemeHookContext {
 		}
 		return '';
 	}
+
+	/**
+	 * Get the URL of the current archive.
+	 * Covers the same archive types as getArchiveTitle().
+	 *
+	 * @return string The archive URL, or an empty string if not available.
+	 */
+	public function getArchiveUrl(): string {
+		if (is_category() || is_tag()) {
+			$url = get_term_link(get_queried_object());
+			return !is_wp_error($url) ? $url : '';
+		} elseif (is_author()) {
+			return get_author_posts_url((int)get_query_var('author'));
+		}
+		return '';
+	}
 }

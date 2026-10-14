@@ -48,7 +48,7 @@ class MetaTag {
 	 *
 	 * @return string
 	 */
-	public function render() {
+	public function render(): string {
 		if ($this->_property) {
 			return sprintf(
 				'<meta property="%s" content="%s" />',

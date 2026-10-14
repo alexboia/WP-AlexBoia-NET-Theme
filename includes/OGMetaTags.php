@@ -92,7 +92,7 @@ class OGMetaTags {
 	private function _addPostTags(): void {
 		$post = $this->_context->currentPost();
 
-		if ( ! $post ) {
+		if (!$post) {
 			return;
 		}
 
@@ -104,6 +104,12 @@ class OGMetaTags {
 			$post->post_title, 
 			'og:title'
 		);
+		$this->_tags[] = new MetaTag(
+			'twitter:title', 
+			$post->post_title, 
+			'twitter:title'
+		);
+
 		$this->_tags[] = new MetaTag(
 			'og:type', 
 			'article', 
@@ -122,6 +128,12 @@ class OGMetaTags {
 				'og:description', 
 				$description, 
 				'og:description'
+			);
+
+			$this->_tags[] = new MetaTag(
+				'twitter:description', 
+				$description, 
+				'twitter:description'
 			);
 		}
 
@@ -242,7 +254,7 @@ class OGMetaTags {
 			$description = wp_strip_all_tags($post->post_excerpt);
 		}
 
-		if (!empty($description) && !empty($post->post_content)) {
+		if (empty($description) && !empty($post->post_content)) {
 			$contents = wp_strip_all_tags($post->post_content);
 			$contents = strip_shortcodes($contents);
 			$contents = trim($contents);
