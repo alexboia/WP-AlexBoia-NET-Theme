@@ -41,7 +41,9 @@ function abnet_get_meta_tags(): OGMetaTags {
 	 * @param OGMetaTags $metaTags The OG meta tags object.
 	 * @param ThemeHookContext  $context  The theme hook context.
 	 */
-	$metaTags = apply_filters('abnet_og_meta_tags', $defaultMetatags, $context);
+	$metaTags = apply_filters('abnet_og_meta_tags', 
+		$defaultMetatags, 
+		$context);
 
 	if (!($metaTags instanceof OGMetaTags)) {
 		$metaTags = $defaultMetatags;
@@ -52,7 +54,6 @@ function abnet_get_meta_tags(): OGMetaTags {
 
 /**
  * Output OG meta tags to the header
- *
  * Hooked to wp_head to output the generated OG meta tags.
  *
  * @since WP AbNet 1.0
@@ -90,7 +91,9 @@ function abnet_get_schema_org(): SchemaOrgManager {
 	 * @param SchemaOrgManager  $schemaManager The schema.org manager object.
 	 * @param ThemeHookContext  $context       The theme hook context.
 	 */
-	$schemaManager = apply_filters('abnet_schema_org', $schemaManager, $context);
+	$schemaManager = apply_filters('abnet_schema_org', 
+		$schemaManager, 
+		$context);
 
 	if (!($schemaManager instanceof SchemaOrgManager)) {
 		$schemaManager = new SchemaOrgManager($context);

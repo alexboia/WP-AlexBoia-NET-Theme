@@ -4,7 +4,7 @@ Theme URI: https://github.com/alexboia/WP-AlexBoia-NET-Theme
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 13.7
+Version: 13.8
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -12,38 +12,38 @@ Text Domain: abnet
 */
 
 /* =Notes
---------------------------------------------------------------
-This stylesheet uses rem values with a pixel fallback. The rem
-values (and line heights) are calculated using two variables:
 
-$rembase:     14;
-$line-height: 24;
+	This stylesheet uses rem values with a pixel fallback. The rem
+	values (and line heights) are calculated using two variables:
 
----------- Examples
+	$rembase:     14;
+	$line-height: 24;
 
-* Use a pixel value with a rem fallback for font-size, padding, margins, etc.
-	padding: 5px 0;
-	padding: 0.357142857rem 0; (5 / $rembase)
+	Examples
 
-* Set a font-size and then set a line-height based on the font-size
-	font-size: 16px
-	font-size: 1.142857143rem; (16 / $rembase)
-	line-height: 1.5; ($line-height / 16)
+	* Use a pixel value with a rem fallback for font-size, padding, margins, etc.
+		padding: 5px 0;
+		padding: 0.357142857rem 0; (5 / $rembase)
 
----------- Vertical spacing
+	* Set a font-size and then set a line-height based on the font-size
+		font-size: 16px
+		font-size: 1.142857143rem; (16 / $rembase)
+		line-height: 1.5; ($line-height / 16)
 
-Vertical spacing between most elements should use 24px or 48px
-to maintain vertical rhythm:
+	Vertical spacing
 
-.my-new-div {
-	margin: 24px 0;
-	margin: 1.714285714rem 0; ( 24 / $rembase )
-}
+	Vertical spacing between most elements should use 24px or 48px
+	to maintain vertical rhythm:
 
----------- Further reading
+	.my-new-div {
+		margin: 24px 0;
+		margin: 1.714285714rem 0; ( 24 / $rembase )
+	}
 
-http://snook.ca/archives/html_and_css/font-size-with-rem
-http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/
+	Further reading
+	http://snook.ca/archives/html_and_css/font-size-with-rem
+	http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/
+*/
 
 
 /* Register fonts */
@@ -579,7 +579,8 @@ nav.nav-single .nav-next .nav-icon {
 .author.archive .author-avatar {
 	margin-top: 0;
 }
-/* =Basic structure-------------------------------------------------------------- */ /* Body, links, basics */
+/* =Basic structure= */ 
+/* Body, links, basics */
 
 html {
 	font-size: 87.5%;
@@ -950,7 +951,7 @@ footer[role="contentinfo"] a:hover {
 	display: block;
 	text-align: center;
 }
-/* =Main content and comment content-------------------------------------------------------------- */
+/* =Main content and comment content= */
 
 .entry-meta {
 	clear: both;
@@ -1257,7 +1258,7 @@ footer.entry-meta {
 	color: #757575;
 	font-weight: normal;
 }
-/* =Archives-------------------------------------------------------------- */
+/* =Archives= */
 
 .archive-header, .page-header {
 	margin-bottom: 12px;
@@ -1274,7 +1275,7 @@ footer.entry-meta {
 	margin-top: 1.571428571rem;
 }
 
-/* =Single image attachment view-------------------------------------------------------------- */
+/* =Single image attachment view= */
 
 .article.attachment {
 	overflow: hidden;
@@ -1299,7 +1300,7 @@ footer.entry-meta {
 	margin-top: 8px;
 	margin-top: 0.571428571rem;
 }
-/* =Aside post format-------------------------------------------------------------- */
+/* =Aside post format= */
 
 article.format-aside h1 {
 	margin-bottom: 24px;
@@ -1332,7 +1333,7 @@ article.format-aside p {
 article.format-aside blockquote:last-child, article.format-aside p:last-child {
 	margin-bottom: 0;
 }
-/* =Post formats-------------------------------------------------------------- */ /* Image posts */
+/* =Post formats= */ /* Image posts */
 
 article.format-image footer h1 {
 	font-size: 13px;
@@ -1437,7 +1438,7 @@ article.format-quote .entry-content blockquote {
 	margin-right: 21px;
 	margin-right: 1.5rem;
 }
-/* =Comments-------------------------------------------------------------- */
+/* =Comments= */
 
 #comment {
 	resize: none;
@@ -1661,7 +1662,7 @@ section.comment-content p.edit-link {
 .required {
 	color: red;
 }
-/* =Front page template-------------------------------------------------------------- */
+/* =Front page template= */
 
 .entry-page-image {
 	margin-bottom: 14px;
@@ -1704,7 +1705,7 @@ section.comment-content p.edit-link {
 	margin: 8px 24px 8px 0;
 	margin: 0.571428571rem 1.714285714rem 0.571428571rem 0;
 }
-/* =Widgets-------------------------------------------------------------- */
+/* =Widgets= */
 
 .widget-area .widget ul ul {
 	margin-left: 12px;
@@ -1758,14 +1759,14 @@ section.comment-content p.edit-link {
 	display: block;
 	text-align: right;
 }
-/* =Plugins----------------------------------------------- */
+/* =Plugins= */
 
 img#wpstats {
 	display: block;
 	margin: 0 auto 24px;
 	margin: 0 auto 1.714285714rem;
 }
-/* =Media queries-------------------------------------------------------------- */ /* Minimum width of 600 pixels. */
+/* =Media queries= */ /* Minimum width of 600 pixels. */
 
 .entry-attachment .attachment {
 	padding: 25px;
@@ -2472,7 +2473,7 @@ img#wpstats {
 	}
 }
 
-/* =Print----------------------------------------------- */
+/* =Print= */
 
 @media print {
 	body {

@@ -50,7 +50,7 @@ function abnet_enqueue_settings_page_styles(string $hookSuffix): void {
 	$themeUri = get_template_directory_uri();
 	$version = wp_get_theme()->get('Version');
 
-	foreach (array('noir', 'fonseca', 'inter') as $font) {
+	foreach (array('inter') as $font) {
 		wp_enqueue_style('abnet-font-' . $font,
 			$themeUri . '/css/fonts/' . $font . '/index.css',
 			array(),
@@ -59,7 +59,7 @@ function abnet_enqueue_settings_page_styles(string $hookSuffix): void {
 
 	wp_enqueue_style('abnet-admin-settings',
 		$themeUri . '/css/admin/settings.css',
-		array('abnet-font-noir', 'abnet-font-fonseca', 'abnet-font-inter'),
+		array('abnet-font-inter'),
 		$version);
 }
 
