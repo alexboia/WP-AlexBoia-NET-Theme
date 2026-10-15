@@ -42,7 +42,7 @@ This file applies to the `wp-alexboia-net` theme ("Wp AbNet"), the theme of the 
   - Use no spaces just inside `()` or `[]`, and none after the unary `!`.
   - Put one space after a comma and around binary operators, assignments and `=>`.
   - Do not align `=>` in associative arrays or `=` in consecutive assignments.
-- **Legacy files:** the Twenty Twelve templates and `functions.php` still use the padded style. Write new and changed code compactly, but do not reformat whole legacy files as a side effect unless asked.
+- **Legacy files:** the Twenty Twelve templates still use the padded style (`functions.php` has been converted). Write new and changed code compactly, but do not reformat whole legacy files as a side effect unless asked.
 - **Indentation and literals:** indent with tabs. Use `array(...)` for array literals and lowercase `true`, `false` and `null`.
 - **Classes:** new classes live under `includes/` in the `AbNetTheme\` namespace, with a file path matching the namespace (the autoloader requires it).
   - Private members use a leading underscore: `$_context`, `_addPostSchema()`.

@@ -22,6 +22,12 @@
  * @since WP AbNet 1.0
  */
 
+use AbNetTheme\ViewModel\CommentViewModel;
+use AbNetTheme\ViewModel\ContentNavViewModel;
+use AbNetTheme\ViewModel\EntryMetaDateViewModel;
+use AbNetTheme\ViewModel\EntryMetaViewModel;
+use AbNetTheme\ViewModel\ViewModel;
+
 require_once __DIR__ . '/autoload.php';
 require_once __DIR__ . '/functions-meta.php';
 require_once __DIR__ . '/functions-admin.php';
@@ -34,10 +40,10 @@ require_once __DIR__ . '/functions-settings.php';
  *
  * @since WP AbNet 1.0
  *
- * @param string                                $viewName The view file name, without the .php extension.
- * @param \AbNetTheme\ViewModel\ViewModel|null $data     The view model.
+ * @param string         $viewName The view file name, without the .php extension.
+ * @param ViewModel|null $data     The view model.
  */
-function abnet_render_view(string $viewName, ?\AbNetTheme\ViewModel\ViewModel $data = null): void {
+function abnet_render_view(string $viewName, ?ViewModel $data = null): void {
 	$viewFile = __DIR__ . '/views/' . $viewName . '.php';
 	if (is_readable($viewFile)) {
 		require $viewFile;
@@ -45,10 +51,26 @@ function abnet_render_view(string $viewName, ?\AbNetTheme\ViewModel\ViewModel $d
 }
 
 /**
+ * Render a view from the theme's views directory and return its output.
+ *
+ * @since WP AbNet 1.0
+ *
+ * @param string         $viewName The view file name, without the .php extension.
+ * @param ViewModel|null $data     The view model.
+ * @return string The rendered view.
+ */
+function abnet_get_rendered_view(string $viewName, ?ViewModel $data = null): string {
+	ob_start();
+	abnet_render_view($viewName, $data);
+	return (string)ob_get_clean();
+}
+
+/**
  * Sets up the content width value based on the theme's design and stylesheet.
  */
-if ( ! isset( $content_width ) )
+if (!isset($content_width)) {
 	$content_width = 625;
+}
 
 /**
  * Sets up theme defaults and registers the various WordPress features that
@@ -63,7 +85,7 @@ if ( ! isset( $content_width ) )
  *
  * @since WP AbNet 1.0
  */
-function abnet_setup() {
+function abnet_setup(): void {
 	/*
 	 * Makes theme available for translation.
 	 *
@@ -71,36 +93,36 @@ function abnet_setup() {
 	 * If you're building a theme based on Twenty Twelve, use a find and replace
 	 * to change 'abnet' to the name of your theme in all the template files.
 	 */
-	load_theme_textdomain( 'abnet', get_template_directory() . '/languages' );
+	load_theme_textdomain('abnet', get_template_directory() . '/languages');
 
 	// This theme styles the visual editor with editor-style.css to match the theme style.
 	add_editor_style();
 
 	// Adds RSS feed links to <head> for posts and comments.
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support('automatic-feed-links');
 
 	// This theme supports a variety of post formats.
-	add_theme_support( 'post-formats', array( 'aside', 'image', 'link', 'quote', 'status' ) );
+	add_theme_support('post-formats', array('aside', 'image', 'link', 'quote', 'status'));
 
 	// This theme uses wp_nav_menu() in one location.
-	register_nav_menu( 'primary', __( 'Primary Menu', 'abnet' ) );
+	register_nav_menu('primary', __('Primary Menu', 'abnet'));
 
 	/*
 	 * This theme supports custom background color and image, and here
 	 * we also set up the default background color.
 	 */
-	add_theme_support( 'custom-background', array(
+	add_theme_support('custom-background', array(
 		'default-color' => 'e6e6e6',
-	) );
+	));
 
 	// This theme uses a custom image size for featured images, displayed on "standard" posts.
-	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 1024, 9999 ); // Unlimited height, soft crop
+	add_theme_support('post-thumbnails');
+	set_post_thumbnail_size(1024, 9999); // Unlimited height, soft crop
 
-	remove_theme_support( 'widgets-block-editor' );
+	remove_theme_support('widgets-block-editor');
 }
 
-add_action( 'after_setup_theme', 'abnet_setup' );
+add_action('after_setup_theme', 'abnet_setup');
 
 /**
  * Returns the Google font stylesheet URL if available.
@@ -112,43 +134,42 @@ add_action( 'after_setup_theme', 'abnet_setup' );
  *
  * @return string Font stylesheet or empty string if disabled.
  */
-function abnet_get_font_url() {
-	$font_url = '';
+function abnet_get_font_url(): string {
+	$fontUrl = '';
 
 	/* translators: If there are characters in your language that are not supported
 	 by Open Sans, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Open Sans font: on or off', 'abnet' ) ) {
+	if ('off' !== _x('on', 'Open Sans font: on or off', 'abnet')) {
 		$subsets = 'latin,latin-ext';
 
 		/* translators: To add an additional Open Sans character subset specific to your language, translate
 		 this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your own language. */
-		$subset = _x( 'no-subset', 'Open Sans font: add new subset (greek, cyrillic, vietnamese)', 'abnet' );
+		$subset = _x('no-subset', 'Open Sans font: add new subset (greek, cyrillic, vietnamese)', 'abnet');
 
-		if ( 'cyrillic' == $subset )
+		if ('cyrillic' == $subset) {
 			$subsets .= ',cyrillic,cyrillic-ext';
-		elseif ( 'greek' == $subset )
+		} elseif ('greek' == $subset) {
 			$subsets .= ',greek,greek-ext';
-		elseif ( 'vietnamese' == $subset )
+		} elseif ('vietnamese' == $subset) {
 			$subsets .= ',vietnamese';
+		}
 
 		$protocol = is_ssl() ? 'https' : 'http';
-		$query_args = array(
+		$queryArgs = array(
 			'family' => 'Open+Sans:400italic,700italic,400,700',
 			'subset' => $subsets,
 		);
-		$font_url = add_query_arg( $query_args, "$protocol://fonts.googleapis.com/css" );
+		$fontUrl = add_query_arg($queryArgs, "$protocol://fonts.googleapis.com/css");
 	}
 
-	return $font_url;
+	return $fontUrl;
 }
 
 /**
  * Retrieve the URI of the Genericicons font stylesheet definition
  */
-function get_generic_icons_stylesheet_uri() {
-    $stylesheet_dir_uri = get_stylesheet_directory_uri();
-    return  $stylesheet_dir_uri .
-        '/genericicons/genericons.css';
+function get_generic_icons_stylesheet_uri(): string {
+	return get_stylesheet_directory_uri() . '/genericicons/genericons.css';
 }
 
 /**
@@ -156,38 +177,39 @@ function get_generic_icons_stylesheet_uri() {
  *
  * @since WP AbNet 1.0
  */
-function abnet_scripts_styles() {
-	global $wp_styles;
-
+function abnet_scripts_styles(): void {
 	/*
 	 * Adds JavaScript to pages with the comment form to support
 	 * sites with threaded comments (when in use).
 	 */
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) )
-		wp_enqueue_script( 'comment-reply' );
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
+	}
 
 	/*
 	 * Adds JavaScript for handling the navigation menu hide-and-show behavior.
 	 */
-	wp_enqueue_script( 'abnet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '1.0', true );
+	wp_enqueue_script('abnet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '1.0', true);
 
-	$font_url = abnet_get_font_url();
-	if ( ! empty( $font_url ) )
-		wp_enqueue_style( 'abnet-fonts', esc_url_raw( $font_url ), array(), null );
+	$fontUrl = abnet_get_font_url();
+	if (!empty($fontUrl)) {
+		wp_enqueue_style('abnet-fonts', esc_url_raw($fontUrl), array(), null);
+	}
 
 	/*
 	 * Loads our main stylesheet.
 	 */
-	wp_enqueue_style( 'abnet-style', get_stylesheet_uri() );
-    wp_enqueue_style( 'genericicons-style', get_generic_icons_stylesheet_uri() );
+	wp_enqueue_style('abnet-style', get_stylesheet_uri());
+	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri());
 
 	/*
 	 * Loads the Internet Explorer specific stylesheet.
 	 */
-	//wp_enqueue_style( 'abnet-ie', get_template_directory_uri() . '/css/ie.css', array( 'abnet-style' ), '20121010' );
-	//$wp_styles->add_data( 'abnet-ie', 'conditional', 'lt IE 9' );
+	//wp_enqueue_style('abnet-ie', get_template_directory_uri() . '/css/ie.css', array('abnet-style'), '20121010');
+	//$wp_styles->add_data('abnet-ie', 'conditional', 'lt IE 9');
 }
-add_action( 'wp_enqueue_scripts', 'abnet_scripts_styles' );
+
+add_action('wp_enqueue_scripts', 'abnet_scripts_styles');
 
 /**
  * Adds additional stylesheets to the TinyMCE editor if needed.
@@ -196,23 +218,26 @@ add_action( 'wp_enqueue_scripts', 'abnet_scripts_styles' );
  *
  * @since WP AbNet 1.2
  *
- * @param string $mce_css CSS path to load in TinyMCE.
- * @return string
+ * @param string|null $mceCss CSS path to load in TinyMCE.
+ * @return string|null
  */
-function abnet_mce_css( $mce_css ) {
-	$font_url = abnet_get_font_url();
+function abnet_mce_css(?string $mceCss): ?string {
+	$fontUrl = abnet_get_font_url();
 
-	if ( empty( $font_url ) )
-		return $mce_css;
+	if (empty($fontUrl)) {
+		return $mceCss;
+	}
 
-	if ( ! empty( $mce_css ) )
-		$mce_css .= ',';
+	if (!empty($mceCss)) {
+		$mceCss .= ',';
+	}
 
-	$mce_css .= esc_url_raw( str_replace( ',', '%2C', $font_url ) );
+	$mceCss .= esc_url_raw(str_replace(',', '%2C', $fontUrl));
 
-	return $mce_css;
+	return $mceCss;
 }
-add_filter( 'mce_css', 'abnet_mce_css' );
+
+add_filter('mce_css', 'abnet_mce_css');
 
 /**
  * Creates a nicely formatted and more specific title element text
@@ -220,104 +245,108 @@ add_filter( 'mce_css', 'abnet_mce_css' );
  *
  * @since WP AbNet 1.0
  *
- * @param string $title Default title text for current view.
- * @param string $sep Optional separator.
+ * @param string|null $title Default title text for current view.
+ * @param string|null $sep   Optional separator.
  * @return string Filtered title.
  */
-function abnet_wp_title( $title, $sep ) {
+function abnet_wp_title(?string $title, ?string $sep): string {
 	global $paged, $page;
 
-	if ( is_feed() )
+	$title = (string)$title;
+	if (is_feed()) {
 		return $title;
+	}
 
 	// Add the site name.
-	$title .= get_bloginfo( 'name' );
+	$title .= get_bloginfo('name');
 
 	// Add the site description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) )
-		$title = "$title $sep $site_description";
+	$siteDescription = get_bloginfo('description', 'display');
+	if ($siteDescription && (is_home() || is_front_page())) {
+		$title = "$title $sep $siteDescription";
+	}
 
 	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 )
-		$title = "$title $sep " . sprintf( __( 'Page %s', 'abnet' ), max( $paged, $page ) );
+	if ($paged >= 2 || $page >= 2) {
+		$title = "$title $sep " . sprintf(__('Page %s', 'abnet'), max($paged, $page));
+	}
 
 	return $title;
 }
-add_filter( 'wp_title', 'abnet_wp_title', 10, 2 );
+
+add_filter('wp_title', 'abnet_wp_title', 10, 2);
 
 /**
  * Makes our wp_nav_menu() fallback -- wp_page_menu() -- show a home link.
  *
  * @since WP AbNet 1.0
  */
-function abnet_page_menu_args( $args ) {
-	if ( ! isset( $args['show_home'] ) )
+function abnet_page_menu_args(array $args): array {
+	if (!isset($args['show_home'])) {
 		$args['show_home'] = true;
+	}
 	return $args;
 }
-add_filter( 'wp_page_menu_args', 'abnet_page_menu_args' );
+
+add_filter('wp_page_menu_args', 'abnet_page_menu_args');
 
 /**
  * Registers our main widget area and the front page widget areas.
  *
  * @since WP AbNet 1.0
  */
-function abnet_widgets_init() {
-	register_sidebar( array(
-		'name' => __( 'Main Sidebar', 'abnet' ),
+function abnet_widgets_init(): void {
+	register_sidebar(array(
+		'name' => __('Main Sidebar', 'abnet'),
 		'id' => 'sidebar-1',
-		'description' => __( 'Appears on posts and pages except the optional Front Page template, which has its own widgets', 'abnet' ),
+		'description' => __('Appears on posts and pages except the optional Front Page template, which has its own widgets', 'abnet'),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget' => '</aside>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
-	) );
+	));
 
-	register_sidebar( array(
-		'name' => __( 'First Front Page Widget Area', 'abnet' ),
+	register_sidebar(array(
+		'name' => __('First Front Page Widget Area', 'abnet'),
 		'id' => 'sidebar-2',
-		'description' => __( 'Appears when using the optional Front Page template with a page set as Static Front Page', 'abnet' ),
+		'description' => __('Appears when using the optional Front Page template with a page set as Static Front Page', 'abnet'),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget' => '</aside>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
-	) );
+	));
 
-	register_sidebar( array(
-		'name' => __( 'Second Front Page Widget Area', 'abnet' ),
+	register_sidebar(array(
+		'name' => __('Second Front Page Widget Area', 'abnet'),
 		'id' => 'sidebar-3',
-		'description' => __( 'Appears when using the optional Front Page template with a page set as Static Front Page', 'abnet' ),
+		'description' => __('Appears when using the optional Front Page template with a page set as Static Front Page', 'abnet'),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget' => '</aside>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
-	) );
+	));
 }
-add_action( 'widgets_init', 'abnet_widgets_init' );
 
-if ( ! function_exists( 'abnet_content_nav' ) ) :
+add_action('widgets_init', 'abnet_widgets_init');
+
+if (!function_exists('abnet_content_nav')):
 	/**
 	 * Displays navigation to next/previous pages when applicable.
 	 *
 	 * @since WP AbNet 1.0
+	 *
+	 * @param string $htmlId The id attribute of the navigation element.
 	 */
-	function abnet_content_nav( $html_id ) {
+	function abnet_content_nav(string $htmlId): void {
 		global $wp_query;
 
-		$html_id = esc_attr( $html_id );
-
-		if ( $wp_query->max_num_pages > 1 ) : ?>
-			<nav id="<?php echo $html_id; ?>" class="navigation" role="navigation">
-				<h3 class="assistive-text"><?php _e( 'Post navigation', 'abnet' ); ?></h3>
-				<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'abnet' ) ); ?></div>
-				<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'abnet' ) ); ?></div>
-			</nav><!-- #<?php echo $html_id; ?> .navigation -->
-		<?php endif;
+		if ($wp_query->max_num_pages > 1) {
+			abnet_render_view('content-nav', new ContentNavViewModel($htmlId));
+		}
 	}
 endif;
 
-if ( ! function_exists( 'abnet_comment' ) ) :
+if (!function_exists('abnet_comment')):
 	/**
 	 * Template for comments and pingbacks.
 	 *
@@ -327,101 +356,73 @@ if ( ! function_exists( 'abnet_comment' ) ) :
 	 * Used as a callback by wp_list_comments() for displaying the comments.
 	 *
 	 * @since WP AbNet 1.0
+	 *
+	 * @param WP_Comment $comment The comment.
+	 * @param array      $args    The wp_list_comments() arguments.
+	 * @param int        $depth   The depth of the comment.
 	 */
-	function abnet_comment( $comment, $args, $depth ) {
+	function abnet_comment(WP_Comment $comment, array $args, int $depth): void {
+		global $post;
+
 		$GLOBALS['comment'] = $comment;
-		switch ( $comment->comment_type ) :
-			case 'pingback' :
-			case 'trackback' :
-			// Display trackbacks differently than normal comments.
-		?>
-		<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-			<p><?php _e( 'Pingback:', 'abnet' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( '(Edit)', 'abnet' ), '<span class="edit-link">', '</span>' ); ?></p>
-		<?php
+
+		$isByPostAuthor = $post instanceof WP_Post
+			&& (int)$comment->user_id > 0
+			&& (int)$comment->user_id === (int)$post->post_author;
+
+		$viewModel = new CommentViewModel($comment, $args, $depth, $isByPostAuthor);
+
+		switch ($comment->comment_type) {
+			case 'pingback':
+			case 'trackback':
+				// Display trackbacks differently than normal comments.
+				abnet_render_view('comment-pingback', $viewModel);
 				break;
-			default :
-			// Proceed with normal comments.
-			global $post;
-		?>
-		<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-			<article id="comment-<?php comment_ID(); ?>" class="comment">
-				<header class="comment-meta comment-author vcard">
-					<?php
-						echo get_avatar( $comment, 44 );
-						printf( '<cite><b class="fn">%1$s</b> %2$s</cite>',
-							get_comment_author_link(),
-							// If current post author is also comment author, make it known visually.
-							( $comment->user_id === $post->post_author ) ? '<span>' . __( 'Post author', 'abnet' ) . '</span>' : ''
-						);
-						printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
-							esc_url( get_comment_link( $comment->comment_ID ) ),
-							get_comment_time( 'c' ),
-							/* translators: 1: date, 2: time */
-							sprintf( __( '%1$s at %2$s', 'abnet' ), get_comment_date(), get_comment_time() )
-						);
-					?>
-				</header><!-- .comment-meta -->
-
-				<?php if ( '0' == $comment->comment_approved ) : ?>
-					<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'abnet' ); ?></p>
-				<?php endif; ?>
-
-				<section class="comment-content comment">
-					<?php comment_text(); ?>				
-				</section><!-- .comment-content -->
-
-				<div class="comment-control">
-					<?php edit_comment_link( '<span class="dashicons dashicons-edit"></span>' . __( 'Edit', 'abnet' ), '<div class="edit-link">', '</div>' ); ?>
-					<div class="reply">
-						<?php comment_reply_link( array_merge( $args, array( 'reply_text' => '<span class="dashicons dashicons-format-chat"></span>' . __( 'Reply', 'abnet' ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-					</div><!-- .reply -->
-				</div>			
-			</article><!-- #comment-## -->
-		<?php
-			break;
-		endswitch; // end comment_type check
+			default:
+				abnet_render_view('comment', $viewModel);
+				break;
+		}
 	}
 endif;
 
-if ( ! function_exists( 'abnet_entry_meta' ) ) :
+if (!function_exists('abnet_entry_meta')):
 	/**
-	 * Prints HTML with meta information for current post: categories, tags, permalink, author, and date.
+	 * Prints HTML with meta information for current post: categories and tags.
 	 *
 	 * Create your own abnet_entry_meta() to override in a child theme.
 	 *
 	 * @since WP AbNet 1.0
 	 */
-	function abnet_entry_meta() {
+	function abnet_entry_meta(): void {
 		// Translators: used between list items, there is a space after the comma.
-		$categories_list = get_the_category_list( __( ', ', 'abnet' ) );
+		$categoriesList = get_the_category_list(__(', ', 'abnet'));
 
 		// Translators: used between list items, there is a space after the comma.
-		$tag_list = get_the_tag_list( '', __( ', ', 'abnet' ) );
+		$tagList = get_the_tag_list('', __(', ', 'abnet'));
 
-		$meta_html = '';
-		if ($categories_list) {
-			$meta_html .= '<span class="entry-meta-categories">' . strtolower($categories_list) . '</span>';
-		}
-		if ($tag_list) {
-			$meta_html .= '<span class="entry-meta-tags">' . $tag_list . '</span>';
-		}
-
-		echo $meta_html;
+		abnet_render_view('entry-meta', new EntryMetaViewModel(
+			$categoriesList ? strtolower($categoriesList) : '',
+			is_string($tagList) ? $tagList : ''
+		));
 	}
 endif;
 
 if (!function_exists('abnet_entry_meta_date')):
-    /**
-     * Retrieves the formatted post date as a link
-     */
-    function abnet_entry_meta_date() {
-        return sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s">%4$s</time></a>',
-            esc_url( get_permalink() ),
-            esc_attr( get_the_time() ),
-            esc_attr( get_the_date( 'c' ) ),
-            esc_html( get_the_date() )
-        );
-    }
+	/**
+	 * Retrieves the formatted post date as a link
+	 *
+	 * @since WP AbNet 1.0
+	 *
+	 * @return string
+	 */
+	function abnet_entry_meta_date(): string {
+		return abnet_get_rendered_view('entry-meta-date', new EntryMetaDateViewModel(
+			(string)get_permalink(),
+			(string)get_the_time(),
+			(string)get_the_date('c'),
+			(string)get_the_date()
+		));
+	}
 endif;
 
 /**
@@ -436,101 +437,121 @@ endif;
  *
  * @since WP AbNet 1.0
  *
- * @param array Existing class values.
+ * @param array $classes Existing class values.
  * @return array Filtered class values.
  */
-function abnet_body_class( $classes ) {
-	$background_color = get_background_color();
-	$background_image = get_background_image();
+function abnet_body_class(array $classes): array {
+	$backgroundColor = get_background_color();
+	$backgroundImage = get_background_image();
 
-	if ( ! is_active_sidebar( 'sidebar-1' ) || is_page_template( 'page-templates/full-width.php' ) )
+	if (!is_active_sidebar('sidebar-1') || is_page_template('page-templates/full-width.php')) {
 		$classes[] = 'full-width';
-
-	if ( is_page_template( 'page-templates/front-page.php' ) ) {
-		$classes[] = 'template-front-page';
-		if ( has_post_thumbnail() )
-			$classes[] = 'has-post-thumbnail';
-		if ( is_active_sidebar( 'sidebar-2' ) && is_active_sidebar( 'sidebar-3' ) )
-			$classes[] = 'two-sidebars';
 	}
 
-	if ( empty( $background_image ) ) {
-		if ( empty( $background_color ) )
+	if (is_page_template('page-templates/front-page.php')) {
+		$classes[] = 'template-front-page';
+		if (has_post_thumbnail()) {
+			$classes[] = 'has-post-thumbnail';
+		}
+		if (is_active_sidebar('sidebar-2') && is_active_sidebar('sidebar-3')) {
+			$classes[] = 'two-sidebars';
+		}
+	}
+
+	if (empty($backgroundImage)) {
+		if (empty($backgroundColor)) {
 			$classes[] = 'custom-background-empty';
-		elseif ( in_array( $background_color, array( 'fff', 'ffffff' ) ) )
+		} elseif (in_array($backgroundColor, array('fff', 'ffffff'))) {
 			$classes[] = 'custom-background-white';
+		}
 	}
 
 	// Enable custom font class only if the font CSS is queued to load.
-	if ( wp_style_is( 'abnet-fonts', 'queue' ) )
+	if (wp_style_is('abnet-fonts', 'queue')) {
 		$classes[] = 'custom-font-enabled';
+	}
 
-	if ( ! is_multi_author() )
+	if (!is_multi_author()) {
 		$classes[] = 'single-author';
+	}
 
 	return $classes;
 }
-add_filter( 'body_class', 'abnet_body_class' );
+
+add_filter('body_class', 'abnet_body_class');
 
 /**
  * Adjusts content_width value for full-width and single image attachment
  * templates, and when there are no active widgets in the sidebar.
  */
 function abnet_content_width(): void {
-	if ( is_page_template( 'page-templates/full-width.php' ) 
-		|| is_attachment() 
-		|| ! is_active_sidebar( 'sidebar-1' ) ) {
+	if (is_page_template('page-templates/full-width.php')
+		|| is_attachment()
+		|| !is_active_sidebar('sidebar-1')) {
 		global $content_width;
 		//$content_width = 960;
 		$content_width = 1010;
 	}
 }
-add_action( 'template_redirect', 'abnet_content_width' );
+
+add_action('template_redirect', 'abnet_content_width');
 
 /**
  * Add postMessage support for site title and description for the Theme Customizer.
  */
-function abnet_customize_register( WP_Customize_Manager $wp_customize ): void {
-	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
-	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
+function abnet_customize_register(WP_Customize_Manager $wpCustomize): void {
+	$wpCustomize->get_setting('blogname')->transport = 'postMessage';
+	$wpCustomize->get_setting('blogdescription')->transport = 'postMessage';
+	$wpCustomize->get_setting('header_textcolor')->transport = 'postMessage';
 }
-add_action( 'customize_register', 'abnet_customize_register' );
+
+add_action('customize_register', 'abnet_customize_register');
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  *
  * @since WP AbNet 1.0
  */
-function abnet_customize_preview_js() {
-	wp_enqueue_script( 'abnet-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20130301', true );
+function abnet_customize_preview_js(): void {
+	wp_enqueue_script('abnet-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array('customize-preview'), '20130301', true);
 }
-add_action( 'customize_preview_init', 'abnet_customize_preview_js' );
 
+add_action('customize_preview_init', 'abnet_customize_preview_js');
 
-function abnet_customize_image_caption() {
+/**
+ * Replaces the core caption shortcodes with abnet_img_caption_shortcode()
+ */
+function abnet_customize_image_caption(): void {
 	remove_shortcode('wp_caption');
 	remove_shortcode('caption');
-    add_shortcode('wp_caption', 'abnet_img_caption_shortcode');
+	add_shortcode('wp_caption', 'abnet_img_caption_shortcode');
 	add_shortcode('caption', 'abnet_img_caption_shortcode');
 }
 
-function abnet_img_caption_shortcode( $attr, $content = '' ) {
-	$originalShortCodeContents = img_caption_shortcode($attr, $content);
+/**
+ * Renders the caption shortcode, sizing the caption text to the image width
+ *
+ * @param array|string $attr    The shortcode attributes (an empty string when there are none).
+ * @param string|null  $content The shortcode content.
+ * @return string
+ */
+function abnet_img_caption_shortcode(array|string $attr, ?string $content = ''): string {
+	$attr = is_array($attr) ? $attr : array();
+	$originalShortCodeContents = img_caption_shortcode($attr, (string)$content);
 	if (empty($attr['width'])) {
 		return $originalShortCodeContents;
 	}
 
-	$width = (int) $attr['width'];
+	$width = (int)$attr['width'];
 	if ($width < 0) {
 		return $originalShortCodeContents;
 	}
 
 	return str_ireplace(
-		'class="wp-caption-text"', 
-		'class="wp-caption-text" style="width: ' . $width . 'px;"', 
+		'class="wp-caption-text"',
+		'class="wp-caption-text" style="width: ' . $width . 'px;"',
 		$originalShortCodeContents
 	);
 }
 
-add_action('wp_head','abnet_customize_image_caption');
+add_action('wp_head', 'abnet_customize_image_caption');
