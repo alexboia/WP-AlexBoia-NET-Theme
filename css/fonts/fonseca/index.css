@@ -3,5 +3,5 @@
 	font-style: normal;
 	font-weight: 400;
 	font-display: block;
-	src: url(./fonseca-regular.otf) format('opentype');
+	src: url(./fonseca-regular.woff2) format('woff2'), url(./fonseca-regular.otf) format('opentype');
 }

@@ -126,6 +126,7 @@ add_action('after_setup_theme', 'abnet_setup');
 
 /**
  * Returns the Google font stylesheet URL if available.
+ * Only the editor uses it (see editor-style.css); the front end does not.
  *
  * The use of Open Sans by default is localized. For languages that use
  * characters not supported by the font, the font can be disabled.
@@ -191,16 +192,23 @@ function abnet_scripts_styles(): void {
 	 */
 	wp_enqueue_script('abnet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '1.0', true);
 
-	$fontUrl = abnet_get_font_url();
-	if (!empty($fontUrl)) {
-		wp_enqueue_style('abnet-fonts', esc_url_raw($fontUrl), array(), null);
+	$version = wp_get_theme()->get('Version');
+
+	/*
+	 * Loads the self-hosted font faces. They are enqueued instead of being
+	 * imported from style.css, so the browser can fetch them in parallel.
+	 */
+	$fontHandles = array();
+	foreach (_abnet_font_faces() as $fontName) {
+		$handle = 'abnet-font-' . $fontName;
+		wp_enqueue_style($handle, get_template_directory_uri() . '/css/fonts/' . $fontName . '/index.css', array(), $version);
+		$fontHandles[] = $handle;
 	}
 
 	/*
 	 * Loads our main stylesheet.
 	 */
-	$version = wp_get_theme()->get('Version');
-	wp_enqueue_style('abnet-style', get_stylesheet_uri(), array(), $version);
+	wp_enqueue_style('abnet-style', get_stylesheet_uri(), $fontHandles, $version);
 	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri(), array(), $version);
 
 	/*
@@ -211,6 +219,44 @@ function abnet_scripts_styles(): void {
 }
 
 add_action('wp_enqueue_scripts', 'abnet_scripts_styles');
+
+/**
+ * The self-hosted font faces used by the theme, as folder names under css/fonts.
+ *
+ * @return string[]
+ */
+function _abnet_font_faces(): array {
+	return array('noir', 'fonseca', 'inter');
+}
+
+/**
+ * Preloads the font files needed to render the header and the body text,
+ * so they do not wait for the font stylesheets to be parsed.
+ *
+ * @param array $resources The resources to preload.
+ * @return array
+ */
+function abnet_preload_fonts(array $resources): array {
+	$fontsUri = get_template_directory_uri() . '/css/fonts';
+	$fontFiles = array(
+		'/noir/noir-regular.woff2',
+		'/fonseca/fonseca-regular.woff2',
+		'/inter/v19/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiA.woff2',
+	);
+
+	foreach ($fontFiles as $fontFile) {
+		$resources[] = array(
+			'href' => $fontsUri . $fontFile,
+			'as' => 'font',
+			'type' => 'font/woff2',
+			'crossorigin' => 'anonymous',
+		);
+	}
+
+	return $resources;
+}
+
+add_filter('wp_preload_resources', 'abnet_preload_fonts');
 
 /**
  * Adds additional stylesheets to the TinyMCE editor if needed.
@@ -433,8 +479,7 @@ endif;
  * 2. Front Page template: thumbnail in use and number of sidebars for
  *    widget areas.
  * 3. White or empty background color to change the layout and spacing.
- * 4. Custom fonts enabled.
- * 5. Single or multiple authors.
+ * 4. Single or multiple authors.
  *
  * @since WP AbNet 1.0
  *
@@ -465,11 +510,6 @@ function abnet_body_class(array $classes): array {
 		} elseif (in_array($backgroundColor, array('fff', 'ffffff'))) {
 			$classes[] = 'custom-background-white';
 		}
-	}
-
-	// Enable custom font class only if the font CSS is queued to load.
-	if (wp_style_is('abnet-fonts', 'queue')) {
-		$classes[] = 'custom-font-enabled';
 	}
 
 	if (!is_multi_author()) {

@@ -4,7 +4,7 @@ Theme URI: https://github.com/alexboia/WP-AlexBoia-NET-Theme
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 13.9
+Version: 14.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -46,11 +46,7 @@ Text Domain: abnet
 */
 
 
-/* Register fonts */
-@import './css/fonts/roboto/index.css';
-@import './css/fonts/fonseca/index.css';
-@import './css/fonts/noir/index.css';
-@import './css/fonts/inter/index.css';
+/* Fonts: the faces in css/fonts are enqueued by abnet_scripts_styles() in functions.php. */
 
 /* =Variables= */
 :root {
