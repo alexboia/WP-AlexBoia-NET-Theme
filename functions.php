@@ -193,6 +193,15 @@ function abnet_scripts_styles(): void {
 	 */
 	wp_enqueue_script('abnet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '1.0', true);
 
+	/*
+	 * Loads embeds marked with .abnet-deferred-embed (e.g. the newsletter widget)
+	 * only after the page has fully loaded.
+	 */
+	wp_enqueue_script('abnet-deferred-embeds', get_template_directory_uri() . '/js/deferred-embeds.js', array(), wp_get_theme()->get('Version'), array(
+		'in_footer' => true,
+		'strategy' => 'defer',
+	));
+
 	$version = wp_get_theme()->get('Version');
 
 	/*
