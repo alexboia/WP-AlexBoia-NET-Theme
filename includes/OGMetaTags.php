@@ -194,11 +194,14 @@ class OGMetaTags {
 			);
 		}
 
-		$this->_tags[] = new MetaTag(
-			'og:url', 
-			get_the_archive_title(), 
-			'og:url'
-		);
+		$archiveUrl = $this->_context->getArchiveUrl();
+		if (!empty($archiveUrl)) {
+			$this->_tags[] = new MetaTag(
+				'og:url',
+				$archiveUrl,
+				'og:url'
+			);
+		}
 
 		$this->_addBlogDescriptionTag();
 	}
@@ -220,6 +223,14 @@ class OGMetaTags {
 			$settings['blog_url'], 
 			'og:url'
 		);
+
+		$blogDescription = $this->_getBlogDescription();
+		if (!empty($blogDescription)) {
+			$this->_tags[] = new MetaTag(
+				'description',
+				$blogDescription
+			);
+		}
 
 		$this->_addBlogDescriptionTag();
 	}
