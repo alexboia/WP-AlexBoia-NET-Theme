@@ -209,3 +209,53 @@ add_filter('wp_abnet_schema_org_properties_blog_posting',
 	'abnet_seo_schema_org_blog_posting',
 	10,
 	2);
+
+/**
+ * Redirect attachment pages to the post they belong to, so they do not
+ * end up indexed as thin pages. Attachments without a published parent
+ * are redirected to the file itself.
+ */
+function abnet_seo_redirect_attachment_page(): void {
+	if (!is_attachment()) {
+		return;
+	}
+
+	$attachmentId = get_queried_object_id();
+	$parentId = wp_get_post_parent_id($attachmentId);
+
+	if ($parentId && get_post_status($parentId) === 'publish') {
+		$target = get_permalink($parentId);
+	} else {
+		$target = wp_get_attachment_url($attachmentId);
+	}
+
+	if (empty($target)) {
+		return;
+	}
+
+	wp_safe_redirect($target, 301);
+	exit;
+}
+
+add_action('template_redirect',
+	'abnet_seo_redirect_attachment_page',
+	1);
+
+/**
+ * Keep thin archive pages (tags, date archives, author archives) out of
+ * the search index, while still letting crawlers follow their links.
+ *
+ * @param array $robots The robots directives.
+ * @return array
+ */
+function abnet_seo_wp_robots(array $robots): array {
+	if (is_tag() || is_date() || is_author()) {
+		$robots['noindex'] = true;
+		$robots['follow'] = true;
+	}
+
+	return $robots;
+}
+
+add_filter('wp_robots',
+	'abnet_seo_wp_robots');
