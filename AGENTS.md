@@ -20,6 +20,7 @@ This file applies to the `wp-alexboia-net` theme ("Wp AbNet"), the theme of the 
 | `functions-settings.php` | Settings > Meta & SEO page (registration, rendering) |
 | `includes/Settings/` | `MetaSettings`: configurable meta attributes (author person, about page, `sameAs`, site name, blog meta description) with their defaults |
 | `functions-seo.php` | SEO title/description metabox (post meta `_abnet_seo_title`, `_abnet_seo_description`) and the filters that apply them |
+| `functions-plugin-connectors.php` | Small front-end adjustments for third-party plug-ins (e.g. dequeuing assets where they are not used); the only place for plug-in-specific code |
 | `includes/OGMetaTags.php`, `includes/SchemaOrgManager.php` | Generation of OG meta tags and schema.org nodes for the current page |
 | `includes/Model/` | `ThemeHookContext` (page context), `MetaTag`, `SchemaOrg` (JSON-LD node), `SchemaOrgBuilder` (factories) |
 | `includes/Model/SchemaOrg/` | Immutable `*Info` argument objects for the builder factories |
@@ -58,7 +59,7 @@ This file applies to the `wp-alexboia-net` theme ("Wp AbNet"), the theme of the 
 
 - **Existing hooks:** theme hooks use the `abnet_` prefix (`abnet_og_meta_tags`, `abnet_schema_org`, `abnet_og_post_description`, ...). The schema property filters `wp_abnet_schema_org_properties_person`, `..._breadcrumbs`, `..._blog_posting`, `..._profile_page` and `..._website` use a `wp_abnet_` prefix by deliberate choice. Preserve existing names, argument order and accepted-argument counts, because plug-ins depend on them.
 - **Documentation:** document each `apply_filters`/`do_action` call immediately above it with its purpose, `@since WP AbNet 1.0` and ordered `@param` entries.
-- **Theme and plug-ins:** the theme does not know about specific plug-ins. It only exposes hooks; plug-ins integrate by hooking into them. For instance, WP Trip Summary adds `contentLocation` to the BlogPosting through `wp_abnet_schema_org_properties_blog_posting`. Do not add plug-in-specific logic to the theme.
+- **Theme and plug-ins:** the theme does not know about specific plug-ins. It only exposes hooks; plug-ins integrate by hooking into them. For instance, WP Trip Summary adds `contentLocation` to the BlogPosting through `wp_abnet_schema_org_properties_blog_posting`. Do not add plug-in-specific logic to the theme. The one exception is `functions-plugin-connectors.php`, which holds small adjustments to third-party plug-ins' front-end behaviour (such as loading their assets only where they are used); each must check that its plug-in is loaded and do nothing otherwise.
 - **`@id` identifiers:** schema.org nodes that others reference keep stable values: `<home url>/#author` (the person behind the blog, also the publisher), `<home url>/#website` and `<permalink>#article`. Changing them breaks references emitted by plug-ins.
 
 ### Other assets
