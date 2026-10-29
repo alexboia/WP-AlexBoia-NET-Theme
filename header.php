@@ -28,8 +28,10 @@
 			<header id="masthead" class="site-header" role="banner">
 				<div class="site-header-line1">
 					<div class="site-name">
-						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-						<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+						<?php /* The site name is the page's main heading only on the blog index; elsewhere the page has its own H1. */ ?>
+						<?php $siteTitleTag = (is_home() || is_front_page()) ? 'h1' : 'p'; ?>
+						<<?php echo $siteTitleTag; ?> class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></<?php echo $siteTitleTag; ?>>
+						<p class="site-description"><?php bloginfo( 'description' ); ?></p>
 					</div>
 					<div class="site-share-ft">
 						<a class="share-github-ft" href="https://github.com/alexboia" target="_blank"></a>

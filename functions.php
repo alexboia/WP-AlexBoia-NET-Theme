@@ -199,8 +199,9 @@ function abnet_scripts_styles(): void {
 	/*
 	 * Loads our main stylesheet.
 	 */
-	wp_enqueue_style('abnet-style', get_stylesheet_uri());
-	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri());
+	$version = wp_get_theme()->get('Version');
+	wp_enqueue_style('abnet-style', get_stylesheet_uri(), array(), $version);
+	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri(), array(), $version);
 
 	/*
 	 * Loads the Internet Explorer specific stylesheet.
