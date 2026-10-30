@@ -218,6 +218,7 @@ function abnet_scripts_styles(): void {
 	}
 
 	wp_enqueue_style('abnet-style', get_stylesheet_uri(), $styleDeps, $version);
+	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri(), array(), $version);
 
 	/*
 	 * Loads the Internet Explorer specific stylesheet.
@@ -258,6 +259,13 @@ function _abnet_font_faces(): array {
  */
 function _abnet_needs_dashicons(): bool {
 	return is_single() || (is_singular() && comments_open());
+}
+
+/**
+ * Retrieve the URI of the Genericicons font stylesheet definition
+ */
+function get_generic_icons_stylesheet_uri(): string {
+	return get_stylesheet_directory_uri() . '/genericicons/genericons.css';
 }
 
 /**
