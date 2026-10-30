@@ -40,3 +40,6 @@ function abnet_connector_captcha_styles(): void {
 add_action('wp_enqueue_scripts',
 	'abnet_connector_captcha_styles',
 	20);
+
+add_action('tablepress_frontend_legacy_css_loading', 
+	'__return_false');
