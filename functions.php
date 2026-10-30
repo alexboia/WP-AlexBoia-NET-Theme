@@ -168,13 +168,6 @@ function abnet_get_font_url(): string {
 }
 
 /**
- * Retrieve the URI of the Genericicons font stylesheet definition
- */
-function get_generic_icons_stylesheet_uri(): string {
-	return get_stylesheet_directory_uri() . '/genericicons/genericons.css';
-}
-
-/**
  * Enqueues scripts and styles for front-end.
  *
  * @since WP AbNet 1.0
@@ -188,21 +181,21 @@ function abnet_scripts_styles(): void {
 		wp_enqueue_script('comment-reply');
 	}
 
+	$version = wp_get_theme()->get('Version');
+
 	/*
 	 * Adds JavaScript for handling the navigation menu hide-and-show behavior.
 	 */
-	wp_enqueue_script('abnet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '1.0', true);
+	wp_enqueue_script('abnet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), $version, true);
 
 	/*
 	 * Loads embeds marked with .abnet-deferred-embed (e.g. the newsletter widget)
 	 * only after the page has fully loaded.
 	 */
-	wp_enqueue_script('abnet-deferred-embeds', get_template_directory_uri() . '/js/deferred-embeds.js', array(), wp_get_theme()->get('Version'), array(
+	wp_enqueue_script('abnet-deferred-embeds', get_template_directory_uri() . '/js/deferred-embeds.js', array(), $version, array(
 		'in_footer' => true,
 		'strategy' => 'defer',
 	));
-
-	$version = wp_get_theme()->get('Version');
 
 	/*
 	 * Loads the self-hosted font faces. They are enqueued instead of being
@@ -225,7 +218,6 @@ function abnet_scripts_styles(): void {
 	}
 
 	wp_enqueue_style('abnet-style', get_stylesheet_uri(), $styleDeps, $version);
-	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri(), array(), $version);
 
 	/*
 	 * Loads the Internet Explorer specific stylesheet.
@@ -235,6 +227,19 @@ function abnet_scripts_styles(): void {
 }
 
 add_action('wp_enqueue_scripts', 'abnet_scripts_styles');
+
+/**
+ * Removes the WordPress emoji script and styles from the front end.
+ * Browsers render emoji natively; feeds, e-mails and the admin are left as they are.
+ */
+function abnet_disable_front_end_emoji(): void {
+	remove_action('wp_head', 'print_emoji_detection_script', 7);
+	remove_action('wp_enqueue_scripts', 'wp_enqueue_emoji_styles');
+	remove_action('wp_print_styles', 'print_emoji_styles');
+	add_filter('emoji_svg_url', '__return_false');
+}
+
+add_action('init', 'abnet_disable_front_end_emoji');
 
 /**
  * The self-hosted font faces used by the theme, as folder names under css/fonts.
