@@ -19,7 +19,9 @@ if (!defined('ABSPATH')) {
 /**
  * Captcha (BestWebSoft) enqueues its stylesheets on every front-end page,
  * but on the front end it is only used by the comment form.
- * Dequeue them wherever that form is not open.
+ * Dequeue them wherever that form is not open, together with the Dashicons
+ * it enqueues for its icons. Styles that declare Dashicons as a dependency
+ * (the theme on single posts, WP Trip Summary, the admin bar) still load them.
  * The login page uses login_enqueue_scripts and is not affected.
  */
 function abnet_connector_captcha_styles(): void {
@@ -31,7 +33,7 @@ function abnet_connector_captcha_styles(): void {
 		return;
 	}
 
-	$handles = array('cptch_stylesheet', 'cptch_desktop_style', 'cptch_mobile_style');
+	$handles = array('cptch_stylesheet', 'cptch_desktop_style', 'cptch_mobile_style', 'dashicons');
 	foreach ($handles as $handle) {
 		wp_dequeue_style($handle);
 	}
@@ -41,5 +43,5 @@ add_action('wp_enqueue_scripts',
 	'abnet_connector_captcha_styles',
 	20);
 
-add_action('tablepress_frontend_legacy_css_loading', 
+add_filter('tablepress_frontend_legacy_css_loading', 
 	'__return_false');

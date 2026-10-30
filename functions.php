@@ -216,9 +216,15 @@ function abnet_scripts_styles(): void {
 	}
 
 	/*
-	 * Loads our main stylesheet.
+	 * Loads our main stylesheet. Dashicons are a dependency only where
+	 * the templates use them, so a plug-in dequeuing them does not break those pages.
 	 */
-	wp_enqueue_style('abnet-style', get_stylesheet_uri(), $fontHandles, $version);
+	$styleDeps = $fontHandles;
+	if (_abnet_needs_dashicons()) {
+		$styleDeps[] = 'dashicons';
+	}
+
+	wp_enqueue_style('abnet-style', get_stylesheet_uri(), $styleDeps, $version);
 	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri(), array(), $version);
 
 	/*
@@ -237,6 +243,16 @@ add_action('wp_enqueue_scripts', 'abnet_scripts_styles');
  */
 function _abnet_font_faces(): array {
 	return array('noir', 'fonseca', 'inter');
+}
+
+/**
+ * Whether the current page shows Dashicons from the theme's templates:
+ * the previous/next arrows on single posts (single.php) and the reply links
+ * of the comments (views/comment.php). The edit links are only shown to
+ * logged-in users, whose admin bar already loads Dashicons.
+ */
+function _abnet_needs_dashicons(): bool {
+	return is_single() || (is_singular() && comments_open());
 }
 
 /**
