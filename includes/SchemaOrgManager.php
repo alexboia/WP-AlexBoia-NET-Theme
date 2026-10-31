@@ -380,7 +380,17 @@ class SchemaOrgManager {
 
 		$webPage = SchemaOrgBuilder::createWebPage($webPageInfo);
 
-		$this->_schemas[] = $webPage;
+		/**
+		 * Filters the final properties of the WebPage schema of an archive
+		 *
+		 * @since WP AbNet 1.0
+		 *
+		 * @param array            $properties The schema properties, including @context and @type.
+		 * @param ThemeHookContext $context    The theme hook context.
+		 */
+		$this->_schemas[] = $this->_filterSchemaProperties($webPage,
+			'wp_abnet_schema_org_properties_archive_web_page',
+			$this->_context);
 	}
 
 	/**

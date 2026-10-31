@@ -503,3 +503,13 @@ msgstr "Folosit de motoarele de căutare când numele site-ului nu poate fi folo
 #: views/meta-settings-page.php:19
 msgid "How the blog presents itself to search engines and social networks."
 msgstr "Cum se prezintă blogul motoarelor de căutare și rețelelor sociale."
+
+#: views/seo-term-fields.php:52
+msgid ""
+"Optional. When filled in, they replace the category name and the site "
+"description in the meta description, social media tags and structured data, "
+"as well as in the page title, if enabled."
+msgstr ""
+"Opțional. Dacă sunt completate, înlocuiesc numele categoriei și descrierea "
+"site-ului în meta descriere, etichetele pentru rețele sociale și datele "
+"structurate, precum și în titlul paginii, dacă opțiunea este bifată."

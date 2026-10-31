@@ -124,21 +124,7 @@ class OGMetaTags {
 		// Post description
 		$description = $this->_computePostDescription($post);
 		if (!empty($description)) {
-			$this->_tags[] = new MetaTag(
-				'description',
-				$description
-			);
-
-			$this->_tags[] = new MetaTag(
-				'og:description',
-				$description, 
-				'og:description'
-			);
-
-			$this->_tags[] = new MetaTag(
-				'twitter:description', 
-				$description
-			);
+			$this->_addDescriptionTags($description);
 		}
 
 		// Featured image
@@ -178,21 +164,29 @@ class OGMetaTags {
 	 */
 	private function _addArchiveTags(): void {
 		$settings = $this->_context->getBlogSettings();
-		$archive_title = $this->_context->getArchiveTitle();
+		$archiveTitle = $this->_context->getArchiveTitle();
 
-		if ( $archive_title ) {
-			$this->_tags[] = new MetaTag(
-				'og:title', 
-				$archive_title, 
-				'og:title'
-			);
-		} else {
-			$this->_tags[] = new MetaTag(
-				'og:title', 
-				$settings['blog_name'], 
-				'og:title'
-			);
-		}
+		/**
+		 * Filters the title used for an archive's Open Graph and Twitter title tags
+		 *
+		 * @since WP AbNet 1.0
+		 *
+		 * @param string           $title   The archive title (such as the category name), or the blog name if it has none.
+		 * @param ThemeHookContext $context The theme hook context.
+		 */
+		$title = apply_filters('abnet_og_archive_title',
+			$archiveTitle ? $archiveTitle : $settings['blog_name'],
+			$this->_context);
+
+		$this->_tags[] = new MetaTag(
+			'og:title',
+			$title,
+			'og:title'
+		);
+		$this->_tags[] = new MetaTag(
+			'twitter:title',
+			$title
+		);
 
 		$archiveUrl = $this->_context->getArchiveUrl();
 		if (!empty($archiveUrl)) {
@@ -203,7 +197,44 @@ class OGMetaTags {
 			);
 		}
 
-		$this->_addBlogDescriptionTag();
+		/**
+		 * Filters the description of an archive
+		 *
+		 * When not empty, it is output as the meta description and the Open Graph and Twitter descriptions.
+		 * When empty, the archive gets no meta description and uses the blog description as its Open Graph description.
+		 *
+		 * @since WP AbNet 1.0
+		 *
+		 * @param string           $description The archive description; empty by default.
+		 * @param ThemeHookContext $context     The theme hook context.
+		 */
+		$description = (string)apply_filters('abnet_og_archive_description',
+			'',
+			$this->_context);
+
+		if ($description !== '') {
+			$this->_addDescriptionTags($description);
+		} else {
+			$this->_addBlogDescriptionTag();
+		}
+	}
+
+	private function _addDescriptionTags(string $description): void {
+		$this->_tags[] = new MetaTag(
+			'description',
+			$description
+		);
+
+		$this->_tags[] = new MetaTag(
+			'og:description',
+			$description,
+			'og:description'
+		);
+
+		$this->_tags[] = new MetaTag(
+			'twitter:description',
+			$description
+		);
 	}
 
 	/**

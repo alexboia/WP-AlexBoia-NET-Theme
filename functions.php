@@ -204,7 +204,11 @@ function abnet_scripts_styles(): void {
 	$fontHandles = array();
 	foreach (_abnet_font_faces() as $fontName) {
 		$handle = 'abnet-font-' . $fontName;
-		wp_enqueue_style($handle, get_template_directory_uri() . '/css/fonts/' . $fontName . '/index.css', array(), $version);
+		wp_enqueue_style($handle, 
+			get_template_directory_uri() . '/css/fonts/' . $fontName . '/index.css', 
+			array(), 
+			$version);
+			
 		$fontHandles[] = $handle;
 	}
 
@@ -217,8 +221,15 @@ function abnet_scripts_styles(): void {
 		$styleDeps[] = 'dashicons';
 	}
 
-	wp_enqueue_style('abnet-style', get_stylesheet_uri(), $styleDeps, $version);
-	wp_enqueue_style('genericicons-style', get_generic_icons_stylesheet_uri(), array(), $version);
+	wp_enqueue_style('abnet-style', 
+		get_stylesheet_uri(), 
+		$styleDeps, 
+		$version);
+
+	wp_enqueue_style('genericicons-style', 
+		get_generic_icons_stylesheet_uri(), 
+		array(), 
+		$version);
 
 	/*
 	 * Loads the Internet Explorer specific stylesheet.

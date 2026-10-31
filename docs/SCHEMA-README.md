@@ -125,6 +125,7 @@ The schema.org system is automatically integrated into the theme:
 | `wp_abnet_schema_org_properties_blog_posting` | Final BlogPosting properties (`array`) | `WP_Post $post`, `ThemeHookContext $context` |
 | `wp_abnet_schema_org_properties_website` | Final WebSite properties (`array`, front page only) | `ThemeHookContext $context` |
 | `wp_abnet_schema_org_properties_profile_page` | Final ProfilePage properties (`array`) | `WP_Post $post` (the about page), `ThemeHookContext $context` |
+| `wp_abnet_schema_org_properties_archive_web_page` | Final WebPage properties of an archive (`array`) | `ThemeHookContext $context` |
 
 The `wp_abnet_schema_org_properties_*` filters receive the complete property array of a schema
 (including `@context` and `@type`) right before it is added to the manager. The schema is rebuilt
