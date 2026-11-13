@@ -1291,7 +1291,7 @@ a.more-link {
 	display: block;
 	border-radius: 2px;
 	font-family: 'Inter', sans-serif;
-	width: 110px;
+	width: 120px;
 	text-align: center;
 	border-radius: var(--abnet-card-radius);
 }

@@ -33,6 +33,7 @@ require_once __DIR__ . '/functions-meta.php';
 require_once __DIR__ . '/functions-admin.php';
 require_once __DIR__ . '/functions-seo.php';
 require_once __DIR__ . '/functions-settings.php';
+require_once __DIR__ . '/functions-compat.php';
 require_once __DIR__ . '/functions-plugin-connectors.php';
 
 /**
