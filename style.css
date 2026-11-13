@@ -4,7 +4,7 @@ Theme URI: https://github.com/alexboia/WP-AlexBoia-NET-Theme
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 14.0
+Version: 14.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -64,6 +64,16 @@ Text Domain: abnet
 	--abnet-regular-site-content-width: 679px;
 	
 	--abnet-image-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+
+	/* Card look shared with the WP Trip Summary box (abp01-frontend-main-modern.css) */
+	--abnet-card-ink: #12303f;
+	--abnet-card-label: #8493A0;
+	--abnet-card-surface: #ffffff;
+	--abnet-card-surface-alt: #F8FAFB;
+	--abnet-card-border: #E3EAEF;
+	--abnet-card-border-inner: #E7EDF1;
+	--abnet-card-radius: 10px;
+	--abnet-card-shadow: 0 14px 34px -24px rgba(10, 56, 104, 0.35);
 }
 
 /* =Reset= */
@@ -337,11 +347,12 @@ img.wp-post-image {
 }
 
 .wp-caption .wp-caption-text, .gallery-caption, .entry-caption {
-	font-style: italic;
+	font-family: 'Inter', sans-serif;
+	font-style: normal;
 	font-size: 12px;
 	font-size: 0.857142857rem;
 	line-height: 2;
-	color: #757575;
+	color: var(--abnet-card-label);
 }
 
 .wp-caption .wp-caption-text {
@@ -355,37 +366,63 @@ img.wp-post-image {
 	padding-right: 0px !important;
 }
 
+/* 
+	Image with caption: a card, like the WP Trip Summary box. 
+	The card carries the border, radius and shadow; 
+	the image and the caption sit flush inside it.
+*/
 .entry-content div.wp-caption {
+	box-sizing: border-box;
 	vertical-align: top;
-	padding-bottom: 9px;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	background-color: var(--abnet-card-surface);
+	border: 1px solid var(--abnet-card-border);
+	border-radius: var(--abnet-card-radius);
+	box-shadow: var(--abnet-card-shadow);
+	overflow: hidden;
+}
+
+/* Keep text away from floated captions (overrides the zero side margins above) */
+.entry-content .wp-caption.alignleft {
+	margin-right: 24px !important;
+	margin-right: 1.714285714rem !important;
+}
+
+.entry-content .wp-caption.alignright {
+	margin-left: 24px !important;
+	margin-left: 1.714285714rem !important;
 }
 
 .entry-content div.wp-caption img {
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
-	vertical-align: top;
-	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin: 0;
+	border-radius: 0;
+	box-shadow: none;
 }
 
 .entry-content div.wp-caption p.wp-caption-text {
-	background-color: #F7F7F7;
-	border: 1px solid #e6e6e6;
-	border-top: none;
-	line-height: normal;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	text-align: center;
+	box-sizing: border-box;
+	max-width: 100%;
 	margin: 0;
+	padding: 9px 14px;
+	background-color: var(--abnet-card-surface-alt);
+	border-top: 1px solid var(--abnet-card-border-inner);
+	text-align: center;
 	vertical-align: top;
-	border-bottom-right-radius: 3px;
-	border-bottom-left-radius: 3px;
-	color: #808080;
+	font-family: 'Inter', sans-serif;
 	font-style: normal;
 	font-weight: 400;
-	font-size: 12px;
-	font-family: 'Inter',sans-serif;
-	max-width: 100%;
-	box-sizing: border-box;
+	font-size: 12.5px;
+	line-height: 1.5;
+	color: var(--abnet-card-ink);
+	-webkit-font-smoothing: antialiased;
+}
+
+.entry-content div.wp-caption p.wp-caption-text a {
+	color: var(--abnet-accent-main);
 }
 
 img.wp-smiley, .rsswidget img {
@@ -1251,9 +1288,12 @@ a.more-link {
 	font-size: 12px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	display: inline-block;
+	display: block;
 	border-radius: 2px;
 	font-family: 'Inter', sans-serif;
+	width: 110px;
+	text-align: center;
+	border-radius: var(--abnet-card-radius);
 }
 
 a.more-link span.meta-nav {

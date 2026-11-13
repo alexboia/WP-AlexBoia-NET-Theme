@@ -100,7 +100,8 @@ function abnet_save_seo_metabox(int $postId, WP_Post $post): void {
 		return;
 	}
 
-	if (wp_is_post_revision($postId) || !in_array($post->post_type, _abnet_seo_post_types(), true)) {
+	if (wp_is_post_revision($postId) 
+		|| !in_array($post->post_type, _abnet_seo_post_types(), true)) {
 		return;
 	}
 
@@ -108,7 +109,8 @@ function abnet_save_seo_metabox(int $postId, WP_Post $post): void {
 		? sanitize_text_field(wp_unslash($_POST[ABNET_SEO_NONCE_NAME]))
 		: '';
 
-	if (!wp_verify_nonce($nonce, ABNET_SEO_NONCE_ACTION) || !current_user_can('edit_post', $postId)) {
+	if (!wp_verify_nonce($nonce, ABNET_SEO_NONCE_ACTION) 
+		|| !current_user_can('edit_post', $postId)) {
 		return;
 	}
 
@@ -127,13 +129,25 @@ add_action('save_post',
  * @param int    $objectId The post or term identifier.
  */
 function _abnet_save_seo_fields(string $metaType, int $objectId): void {
-	_abnet_update_seo_meta($metaType, $objectId, ABNET_SEO_TITLE_META_KEY, 'abnet_seo_title');
-	_abnet_update_seo_meta($metaType, $objectId, ABNET_SEO_DESCRIPTION_META_KEY, 'abnet_seo_description');
+	_abnet_update_seo_meta($metaType, 
+		$objectId, 
+		ABNET_SEO_TITLE_META_KEY, 
+		'abnet_seo_title');
+
+	_abnet_update_seo_meta($metaType, 
+		$objectId, 
+		ABNET_SEO_DESCRIPTION_META_KEY, 
+		'abnet_seo_description');
 
 	if (!empty($_POST['abnet_seo_use_in_document_title'])) {
-		delete_metadata($metaType, $objectId, ABNET_SEO_USE_IN_DOCUMENT_TITLE_META_KEY);
+		delete_metadata($metaType, 
+			$objectId, 
+			ABNET_SEO_USE_IN_DOCUMENT_TITLE_META_KEY);
 	} else {
-		update_metadata($metaType, $objectId, ABNET_SEO_USE_IN_DOCUMENT_TITLE_META_KEY, '0');
+		update_metadata($metaType, 
+			$objectId, 
+			ABNET_SEO_USE_IN_DOCUMENT_TITLE_META_KEY, 
+			'0');
 	}
 }
 
@@ -143,9 +157,14 @@ function _abnet_update_seo_meta(string $metaType, int $objectId, string $metaKey
 		: '';
 
 	if ($value !== '') {
-		update_metadata($metaType, $objectId, $metaKey, $value);
+		update_metadata($metaType, 
+			$objectId, 
+			$metaKey, 
+			$value);
 	} else {
-		delete_metadata($metaType, $objectId, $metaKey);
+		delete_metadata($metaType, 
+			$objectId, 
+			$metaKey);
 	}
 }
 
@@ -259,7 +278,8 @@ function abnet_save_seo_term_fields(int $termId): void {
 		? sanitize_text_field(wp_unslash($_POST[ABNET_SEO_NONCE_NAME]))
 		: '';
 
-	if (!wp_verify_nonce($nonce, ABNET_SEO_NONCE_ACTION) || !current_user_can('edit_term', $termId)) {
+	if (!wp_verify_nonce($nonce, ABNET_SEO_NONCE_ACTION) 
+		|| !current_user_can('edit_term', $termId)) {
 		return;
 	}
 
@@ -315,7 +335,10 @@ function _abnet_seo_current_term(): ?WP_Term {
 	}
 
 	$term = get_queried_object();
-	return $term instanceof WP_Term && in_array($term->taxonomy, $taxonomies, true) ? $term : null;
+	return $term instanceof WP_Term 
+		&& in_array($term->taxonomy, $taxonomies, true) ?
+			$term 
+			: null;
 }
 
 function abnet_seo_og_archive_title(string $title, ThemeHookContext $context): string {

@@ -646,3 +646,19 @@ function abnet_img_caption_shortcode(array|string $attr, ?string $content = ''):
 }
 
 add_action('wp_head', 'abnet_customize_image_caption');
+
+/**
+ * Sizes the caption container to the image width plus its 1px borders,
+ * instead of the extra 10px core adds for themes without HTML5 captions,
+ * so that the image and the caption text fill the caption card.
+ *
+ * @param int|string $width The caption width computed by core.
+ * @param array      $atts  The shortcode attributes.
+ * @return int|string
+ */
+function abnet_img_caption_shortcode_width(int|string $width, array $atts): int|string {
+	$imageWidth = (int)($atts['width'] ?? 0);
+	return $imageWidth > 0 ? $imageWidth + 2 : $width;
+}
+
+add_filter('img_caption_shortcode_width', 'abnet_img_caption_shortcode_width', 10, 2);
