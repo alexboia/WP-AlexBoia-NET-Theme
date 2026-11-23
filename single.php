@@ -16,6 +16,7 @@ get_header(); ?>
 
 				<?php get_template_part( 'content', get_post_format() ); ?>
 
+				<?php if (!abnet_photo_archive_chapter_nav()): ?>
 				<nav class="nav-single">
 					<div class="nav-single-row">
 						<h3 class="assistive-text"><?php _e( 'Post navigation', 'abnet' ); ?></h3>
@@ -29,6 +30,7 @@ get_header(); ?>
 						</div>
 					</div>
 				</nav><!-- .nav-single -->
+				<?php endif; ?>
 
 				<?php comments_template( '', true ); ?>
 

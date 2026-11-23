@@ -1,0 +1,66 @@
+/*
+	Image lightbox (PhotoSwipe), loaded only on single posts with images,
+	by abnet_lightbox_scripts_styles() in functions-lightbox.php.
+	Adjusts the PhotoSwipe defaults to the blog's look and adds the caption bar.
+*/
+
+.pswp {
+	--pswp-bg: #06213d;
+	--pswp-placeholder-bg: #0A3868;
+	--pswp-icon-color: #ffffff;
+	--pswp-icon-color-secondary: #06213d;
+	--pswp-icon-stroke-color: #06213d;
+	--pswp-error-text-color: #ffffff;
+	font-family: 'Inter', sans-serif;
+}
+
+.pswp__counter {
+	font-size: 13px;
+	font-variant-numeric: tabular-nums;
+	opacity: 0.8;
+}
+
+/* No page scrollbar while the lightbox is open (set by js/lightbox.js) */
+html.abnet-lightbox-open {
+	overflow: hidden;
+}
+
+/* Links that open in the lightbox */
+.entry-content a[data-pswp-width] {
+	cursor: zoom-in;
+}
+
+/* Caption bar at the bottom of the lightbox */
+.pswp__abnet-caption {
+	position: absolute;
+	left: 50%;
+	bottom: 16px;
+	transform: translateX(-50%);
+	box-sizing: border-box;
+	max-width: min(760px, calc(100% - 32px));
+	padding: 8px 14px;
+	border-radius: 8px;
+	background-color: rgba(6, 33, 61, 0.78);
+	color: #ffffff;
+	font-size: 14px;
+	line-height: 1.45;
+	text-align: center;
+	pointer-events: none;
+	transition: opacity 0.2s ease;
+}
+
+.pswp__abnet-caption[hidden] {
+	display: none;
+}
+
+/* The caption gets out of the way while the image is zoomed in */
+.pswp--zoomed-in .pswp__abnet-caption {
+	opacity: 0;
+}
+
+@media screen and (max-width: 600px) {
+	.pswp__abnet-caption {
+		bottom: 8px;
+		font-size: 13px;
+	}
+}

@@ -1,0 +1,416 @@
+/*
+	Photo archives: the landing page (page-templates/photo-archive.php)
+	and the banner and navigation of its chapter posts.
+	Loaded only on those pages, by abnet_photo_archive_scripts_styles().
+	Builds on the card variables of style.css, so it follows the blog's look.
+*/
+
+/* =Landing page= */
+
+.template-photo-archive .site-content article.abnet-pa {
+	border-bottom: 0 none;
+	padding-bottom: 0;
+	hyphens: manual;
+}
+
+/* Hero: the featured image under a navy gradient, title and figures on top */
+.abnet-pa-hero {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	min-height: 220px;
+	margin: 12px 0 32px;
+	border-radius: var(--abnet-card-radius);
+	overflow: hidden;
+	background-color: var(--abnet-accent-untamed);
+	background-image: linear-gradient(135deg, var(--abnet-accent-untamed) 0%, #12507F 100%);
+	box-shadow: var(--abnet-card-shadow);
+	color: #fff;
+	font-family: 'Inter', sans-serif;
+}
+
+.abnet-pa-hero-with-image {
+	min-height: 420px;
+}
+
+.abnet-pa-hero-image {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	filter: grayscale(0.15) contrast(1.05);
+}
+
+.abnet-pa-hero-with-image::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(10, 56, 104, 0.05) 30%, rgba(10, 56, 104, 0.9) 100%);
+}
+
+.abnet-pa-hero-inner {
+	position: relative;
+	z-index: 1;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 32px 36px 28px;
+}
+
+.abnet-pa-kicker {
+	margin: 0 0 10px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #8FE3EC;
+}
+
+.abnet-pa-title {
+	margin: 0;
+	font-size: 34px;
+	font-weight: 600;
+	line-height: 1.15;
+	color: #fff;
+	text-wrap: balance;
+}
+
+.abnet-pa-subtitle {
+	max-width: 680px;
+	margin: 12px 0 0;
+	font-size: 16px;
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.88);
+}
+
+.abnet-pa-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 36px;
+	margin: 24px 0 0;
+	padding: 18px 0 0;
+	list-style: none;
+	border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.abnet-pa-stats li {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.abnet-pa-stats strong {
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 1.2;
+	font-variant-numeric: tabular-nums;
+}
+
+.abnet-pa-stats span {
+	font-size: 12px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.75);
+}
+
+/* Introduction: the page content, kept to a comfortable reading width */
+.template-photo-archive .abnet-pa-intro {
+	max-width: 720px;
+	margin: 0 auto 40px;
+}
+
+/* Section titles */
+.abnet-pa-section-title {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin: 0 0 20px;
+	font-family: 'Inter', sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--abnet-card-label);
+}
+
+.abnet-pa-section-title::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background-color: var(--abnet-card-border);
+}
+
+/* Chapter cards */
+.abnet-pa-chapter-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 24px;
+	margin: 0 0 32px;
+	padding: 0;
+	list-style: none;
+}
+
+.abnet-pa-chapter {
+	margin: 0;
+}
+
+.abnet-pa-chapter-link {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	background-color: var(--abnet-card-surface);
+	border: 1px solid var(--abnet-card-border);
+	border-radius: var(--abnet-card-radius);
+	box-shadow: var(--abnet-card-shadow);
+	color: var(--abnet-card-ink);
+	font-family: 'Inter', sans-serif;
+	text-decoration: none;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.abnet-pa-chapter-link:hover,
+.abnet-pa-chapter-link:focus-visible {
+	transform: translateY(-3px);
+	border-color: var(--abnet-accent-main);
+	box-shadow: 0 18px 38px -22px rgba(10, 56, 104, 0.45);
+	color: var(--abnet-card-ink);
+}
+
+.abnet-pa-chapter-media {
+	position: relative;
+	display: block;
+	aspect-ratio: 3 / 2;
+	overflow: hidden;
+	background-color: var(--abnet-card-surface-alt);
+	background-image: linear-gradient(135deg, #E9F3F6 0%, #F8FAFB 100%);
+}
+
+.abnet-pa-chapter-media img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	margin: 0;
+	border-radius: 0;
+	box-shadow: none;
+	transition: transform 0.4s ease;
+}
+
+.abnet-pa-chapter-link:hover .abnet-pa-chapter-media img {
+	transform: scale(1.04);
+}
+
+.abnet-pa-chapter-number {
+	position: absolute;
+	left: 14px;
+	bottom: 12px;
+	padding: 3px 9px;
+	border-radius: 6px;
+	background-color: rgba(10, 56, 104, 0.85);
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.04em;
+}
+
+.abnet-pa-chapter-body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 8px;
+	padding: 16px 18px 18px;
+}
+
+.abnet-pa-chapter-label {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--abnet-accent-main);
+}
+
+.abnet-pa-chapter-title {
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--abnet-accent-untamed);
+}
+
+.abnet-pa-chapter-excerpt {
+	font-size: 14px;
+	line-height: 1.55;
+	color: #5E6B75;
+}
+
+.abnet-pa-chapter-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: auto;
+	padding-top: 12px;
+	border-top: 1px solid var(--abnet-card-border-inner);
+	font-size: 12px;
+	color: var(--abnet-card-label);
+}
+
+.abnet-pa-chapter-count {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.abnet-pa-chapter-count .genericon {
+	font-size: 16px;
+}
+
+.abnet-pa-chapter-cta {
+	font-weight: 600;
+	color: var(--abnet-accent-main);
+}
+
+.abnet-pa-empty {
+	padding: 24px;
+	border: 1px dashed var(--abnet-card-border);
+	border-radius: var(--abnet-card-radius);
+	background-color: var(--abnet-card-surface-alt);
+	color: var(--abnet-card-label);
+	font-family: 'Inter', sans-serif;
+	text-align: center;
+}
+
+/* =Chapter posts= */
+
+/*
+	Chapter hero (views/photo-archive-chapter-hero.php): the landing page hero,
+	lower (2:1, the featured image cropped around its center), with the chapter position
+	and the archive link above the title. The post date and author follow under it.
+*/
+.abnet-pa-hero-chapter {
+	margin: 12px 0 14px;
+}
+
+.abnet-pa-hero-chapter.abnet-pa-hero-with-image {
+	min-height: 0;
+	aspect-ratio: 2 / 1;
+}
+
+.abnet-pa-hero-chapter .abnet-pa-hero-inner {
+	padding: 24px 28px 22px;
+}
+
+.abnet-pa-hero-chapter .abnet-pa-kicker {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 2px 8px;
+	margin-bottom: 8px;
+}
+
+.abnet-pa-kicker-position {
+	font-variant-numeric: tabular-nums;
+}
+
+.abnet-pa-kicker-separator {
+	opacity: 0.7;
+}
+
+.abnet-pa-hero .abnet-pa-kicker-archive,
+.abnet-pa-hero .abnet-pa-kicker-archive:visited {
+	color: #ffffff;
+	text-decoration: none;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.abnet-pa-hero .abnet-pa-kicker-archive:hover {
+	color: #8FE3EC;
+	border-bottom-color: #8FE3EC;
+}
+
+/* Beats .entry-header .entry-title from style.css */
+.entry-header .abnet-pa-hero-chapter .entry-title.abnet-pa-title {
+	font-size: 26px;
+	font-weight: 600;
+	line-height: 1.2;
+	color: #ffffff;
+}
+
+.abnet-pa-nav-label {
+	display: block;
+	margin-bottom: 2px;
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	opacity: 0.7;
+}
+
+.abnet-pa-nav-archive {
+	margin: 12px 0 24px;
+	font-family: 'Inter', sans-serif;
+	font-size: 13px;
+	text-align: center;
+}
+
+.abnet-pa-nav-archive a {
+	color: var(--abnet-accent-main);
+	text-decoration: none;
+}
+
+.abnet-pa-nav-archive a:hover {
+	text-decoration: underline;
+}
+
+/* =Small screens= */
+
+@media screen and (max-width: 600px) {
+	.abnet-pa-hero-with-image {
+		min-height: 340px;
+	}
+
+	.abnet-pa-hero-inner {
+		padding: 22px 20px 20px;
+	}
+
+	.abnet-pa-title {
+		font-size: 26px;
+	}
+
+	.abnet-pa-subtitle {
+		font-size: 15px;
+	}
+
+	.abnet-pa-stats {
+		gap: 10px 24px;
+	}
+
+	/* 2:1 leaves too little room for the title on a phone */
+	.abnet-pa-hero-chapter.abnet-pa-hero-with-image {
+		aspect-ratio: auto;
+		min-height: 260px;
+	}
+
+	.abnet-pa-hero-chapter .abnet-pa-hero-inner {
+		padding: 18px 18px 16px;
+	}
+
+	.entry-header .abnet-pa-hero-chapter .entry-title.abnet-pa-title {
+		font-size: 22px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.abnet-pa-chapter-link,
+	.abnet-pa-chapter-media img {
+		transition: none;
+	}
+
+	.abnet-pa-chapter-link:hover,
+	.abnet-pa-chapter-link:focus-visible,
+	.abnet-pa-chapter-link:hover .abnet-pa-chapter-media img {
+		transform: none;
+	}
+}

@@ -513,3 +513,122 @@ msgstr ""
 "Opțional. Dacă sunt completate, înlocuiesc numele categoriei și descrierea "
 "site-ului în meta descriere, etichetele pentru rețele sociale și datele "
 "structurate, precum și în titlul paginii, dacă opțiunea este bifată."
+
+#: page-templates/photo-archive.php
+msgid "Photo Archive"
+msgstr "Arhivă foto"
+
+#: functions-photo-archive.php views/photo-archive-hero.php
+#: views/photo-archive-chapter-banner.php
+msgid "Photo archive"
+msgstr "Arhivă foto"
+
+#: views/photo-archive-hero.php views/photo-archive-metabox.php
+msgid "Period"
+msgstr "Perioada"
+
+#: views/photo-archive-hero.php
+msgid "chapter"
+msgid_plural "chapters"
+msgstr[0] "capitol"
+msgstr[1] "capitole"
+
+#: views/photo-archive-hero.php
+msgid "photo"
+msgid_plural "photos"
+msgstr[0] "fotografie"
+msgstr[1] "fotografii"
+
+#: views/photo-archive-chapters.php
+msgid "Chapters"
+msgstr "Capitole"
+
+#: views/photo-archive-chapters.php
+msgid "No chapters have been published yet."
+msgstr "Niciun capitol nu a fost publicat încă."
+
+#: views/photo-archive-chapters.php
+msgid "Choose the chapter category in the Photo archive box of the page editor."
+msgstr "Alege categoria capitolelor în caseta Arhivă foto din editorul paginii."
+
+#: views/photo-archive-chapters.php
+#, php-format
+msgid "Chapter %s"
+msgstr "Capitolul %s"
+
+#: views/photo-archive-chapters.php
+#, php-format
+msgid "%s photo"
+msgid_plural "%s photos"
+msgstr[0] "%s fotografie"
+msgstr[1] "%s fotografii"
+
+#: views/photo-archive-chapters.php
+msgid "View chapter"
+msgstr "Vezi capitolul"
+
+#: views/photo-archive-chapter-banner.php
+#, php-format
+msgid "Chapter %1$s of %2$s"
+msgstr "Capitolul %1$s din %2$s"
+
+#: views/photo-archive-chapter-nav.php
+msgid "Chapter navigation"
+msgstr "Navigare între capitole"
+
+#: views/photo-archive-chapter-nav.php
+msgid "Previous chapter"
+msgstr "Capitolul anterior"
+
+#: views/photo-archive-chapter-nav.php
+msgid "Next chapter"
+msgstr "Capitolul următor"
+
+#: views/photo-archive-chapter-nav.php
+#, php-format
+msgid "All chapters of %s"
+msgstr "Toate capitolele arhivei %s"
+
+#: views/photo-archive-metabox.php
+msgid "Used only when the page has the Photo Archive template."
+msgstr "Folosite doar când pagina are șablonul Arhivă foto."
+
+#: views/photo-archive-metabox.php
+msgid "Chapter category"
+msgstr "Categoria capitolelor"
+
+#: views/photo-archive-metabox.php
+msgid "— Select a category —"
+msgstr "— Alege o categorie —"
+
+#: views/photo-archive-metabox.php
+msgid "The posts in this category are listed as chapters, oldest first."
+msgstr "Fiecare articol din această categorie devine un capitol, de la cel mai vechi la cel mai nou."
+
+#: views/photo-archive-metabox.php
+msgid "Subtitle"
+msgstr "Subtitlu"
+
+#: views/photo-archive-metabox.php
+msgid "For instance: 1936–1938"
+msgstr "De exemplu: 1936–1938"
+
+#: functions-lightbox.php
+msgid "Close"
+msgstr "Închide"
+
+#: functions-lightbox.php
+msgid "Zoom"
+msgstr "Mărește"
+
+#: functions-lightbox.php
+msgid "Previous image"
+msgstr "Imaginea anterioară"
+
+#: functions-lightbox.php
+msgid "Next image"
+msgstr "Imaginea următoare"
+
+#: functions-lightbox.php
+msgid "The image could not be loaded."
+msgstr "Imaginea nu a putut fi încărcată."

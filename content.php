@@ -15,6 +15,7 @@
 		</div>
 		<?php endif; ?>
 		<header class="entry-header">
+			<?php if (!abnet_photo_archive_chapter_hero()): // chapter posts of a photo archive get a hero instead ?>
 			<?php the_post_thumbnail(); ?>
 			<?php if ( is_single() ) : ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
@@ -23,6 +24,7 @@
 				<a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
 			</h2>
 			<?php endif; // is_single() ?>
+			<?php endif; ?>
 
             <div class="entry-header-links">
 				<?php if (is_singular()): ?>

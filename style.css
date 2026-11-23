@@ -4,7 +4,7 @@ Theme URI: https://github.com/alexboia/WP-AlexBoia-NET-Theme
 Author: the WordPress team, Alexandru Boia
 Author URI: http://wordpress.org/
 Description: AlexBoia.NET theme, based on the WordPress 2012 theme
-Version: 14.1
+Version: 14.5
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -366,6 +366,35 @@ img.wp-post-image {
 	padding-right: 0px !important;
 }
 
+.abp01-techbox-frontend {
+	margin-top: 8px;
+}
+
+/*
+	WP Trip Summary map loading bar: the modern plug-in stylesheet
+	no longer positions it, so it is centered horizontally here,
+	at a fixed offset from the top of the map holder.
+	Remove once the plug-in ships its own rule.
+*/
+.abp01-map .abp01-map-progress {
+	position: absolute;
+	top: 24px;
+	left: 50%;
+	transform: translateX(-50%);
+	/* keeps the full bar width on narrow maps, where 50% of the holder is less than the bar */
+	width: max-content;
+	z-index: 1000;
+	line-height: 0;
+}
+
+.entry-content .abp01-map .abp01-map-progress img {
+	display: block;
+	max-width: none;
+	margin: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
 /* 
 	Image with caption: a card, like the WP Trip Summary box. 
 	The card carries the border, radius and shadow; 
@@ -381,6 +410,7 @@ img.wp-post-image {
 	border-radius: var(--abnet-card-radius);
 	box-shadow: var(--abnet-card-shadow);
 	overflow: hidden;
+	margin-bottom: 4px;
 }
 
 /* Keep text away from floated captions (overrides the zero side margins above) */
@@ -612,6 +642,16 @@ nav.nav-single .nav-next .nav-icon {
 .author.archive .author-avatar {
 	margin-top: 0;
 }
+
+/* =WP Modula= */
+.entry-content .modula-item-content,
+.entry-content .modula-item-content img.pic,
+html body .entry-content .modula.modula-columns .modula-items .modula-item,
+html body .entry-content .modula.modula-columns .modula-items .modula-item img.pic, 
+html body .entry-content .modula.modula-columns .modula-items .modula-item picture.pic {
+	border-radius: 8px !important;
+}
+
 /* =Basic structure= */ 
 /* Body, links, basics */
 
@@ -2645,3 +2685,4 @@ img#wpstats {
 		margin-left: 3.57142857rem;
 	}
 }
+

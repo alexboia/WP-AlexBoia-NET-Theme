@@ -18,6 +18,8 @@ This file applies to the `wp-alexboia-net` theme ("Wp AbNet"), the theme of the 
 | `functions-meta.php` | Hooks `wp_head` to output Open Graph tags and schema.org data; exposes their filters |
 | `functions-admin.php` | Admin/editor customizations (TinyMCE, Enlighter code block buttons) |
 | `functions-compat.php` | Temporary, version-gated workarounds for known plug-in bugs; the only place where the theme may refer to a specific plug-in. Remove each shim once the fixed plug-in version is deployed |
+| `functions-photo-archive.php` | Photo archives: the Photo Archive page template's data (chapters = posts of a chosen category), its page editor metabox (`_abnet_photo_archive_*` page meta), the hero (in place of the featured image and title in `content.php`) and chapter navigation on chapter posts, and hiding chapter featured images in post listings; styles in `css/photo-archive.css` |
+| `functions-lightbox.php` | Image lightbox on single posts with images: loads PhotoSwipe (vendored in `js/vendor/photoswipe`, `css/vendor/photoswipe`) through the `js/lightbox.js` script module, adds image sizes to image links and points attachment-page and `[gallery]` links at the image files |
 | `functions-settings.php` | Settings > Meta & SEO page (registration, rendering) |
 | `includes/Settings/` | `MetaSettings`: configurable meta attributes (author person, about page, `sameAs`, site name, blog meta description) with their defaults |
 | `functions-seo.php` | SEO title/description metabox for posts and fields for the category add and edit screens (post and term meta `_abnet_seo_title`, `_abnet_seo_description`), and the filters that apply them |
