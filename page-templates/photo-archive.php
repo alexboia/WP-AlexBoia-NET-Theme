@@ -39,4 +39,7 @@ get_header(); ?>
 		</div><!-- #content -->
 	</div><!-- #primary -->
 
+<?php if (_abnet_current_photo_archive_has_sidebar()): ?>
+	<?php get_sidebar(); ?>
+<?php endif; ?>
 <?php get_footer(); ?>

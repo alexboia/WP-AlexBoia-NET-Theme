@@ -21,6 +21,7 @@ final readonly class PhotoArchiveMetaboxViewModel implements ViewModel {
 	 * @param WP_Term[] $categories  The categories to choose from.
 	 * @param string    $subtitle    The subtitle.
 	 * @param string    $period      The period the photos cover.
+	 * @param bool      $showSidebar Whether the page keeps the blog sidebar.
 	 * @param string    $nonceAction The nonce action.
 	 * @param string    $nonceName   The nonce field name.
 	 */
@@ -29,6 +30,7 @@ final readonly class PhotoArchiveMetaboxViewModel implements ViewModel {
 		public array $categories,
 		public string $subtitle,
 		public string $period,
+		public bool $showSidebar,
 		public string $nonceAction,
 		public string $nonceName
 	){

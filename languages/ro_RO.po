@@ -632,3 +632,9 @@ msgstr "Imaginea următoare"
 #: functions-lightbox.php
 msgid "The image could not be loaded."
 msgstr "Imaginea nu a putut fi încărcată."
+
+msgid "Show the blog sidebar"
+msgstr "Afișează bara laterală a blogului"
+
+msgid "Otherwise the page spans the full width."
+msgstr "Altfel, pagina ocupă toată lățimea."

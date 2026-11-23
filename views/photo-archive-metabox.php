@@ -47,3 +47,14 @@ wp_nonce_field($data->nonceAction, $data->nonceName);
 		value="<?php echo esc_attr($data->period); ?>" />
 	<span class="description"><?php esc_html_e('For instance: 1936–1938', 'abnet'); ?></span>
 </p>
+<p>
+	<label for="abnet-photo-archive-sidebar">
+		<input type="checkbox"
+			id="abnet-photo-archive-sidebar"
+			name="abnet_photo_archive_sidebar"
+			value="1"
+			<?php checked($data->showSidebar); ?> />
+		<?php esc_html_e('Show the blog sidebar', 'abnet'); ?>
+	</label>
+	<br /><span class="description"><?php esc_html_e('Otherwise the page spans the full width.', 'abnet'); ?></span>
+</p>

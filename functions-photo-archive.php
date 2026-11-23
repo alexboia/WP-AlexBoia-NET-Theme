@@ -26,11 +26,30 @@ const ABNET_PHOTO_ARCHIVE_TEMPLATE = 'page-templates/photo-archive.php';
 const ABNET_PHOTO_ARCHIVE_CATEGORY_META_KEY = '_abnet_photo_archive_category';
 const ABNET_PHOTO_ARCHIVE_SUBTITLE_META_KEY = '_abnet_photo_archive_subtitle';
 const ABNET_PHOTO_ARCHIVE_PERIOD_META_KEY = '_abnet_photo_archive_period';
+const ABNET_PHOTO_ARCHIVE_SIDEBAR_META_KEY = '_abnet_photo_archive_sidebar';
 const ABNET_PHOTO_ARCHIVE_NONCE_ACTION = 'abnet_save_photo_archive_metabox';
 const ABNET_PHOTO_ARCHIVE_NONCE_NAME = 'abnet_photo_archive_metabox_nonce';
 
 function abnet_is_photo_archive_page(): bool {
 	return is_page_template(ABNET_PHOTO_ARCHIVE_TEMPLATE);
+}
+
+/**
+ * Whether a photo archive page keeps the blog sidebar instead of spanning the full width
+ *
+ * @since WP AbNet 1.0
+ *
+ * @param int $pageId The archive page.
+ * @return bool True when the "Show the blog sidebar" option is on and the sidebar has widgets.
+ */
+function abnet_photo_archive_has_sidebar(int $pageId): bool {
+	return get_post_meta($pageId, ABNET_PHOTO_ARCHIVE_SIDEBAR_META_KEY, true) === '1'
+		&& is_active_sidebar('sidebar-1');
+}
+
+function _abnet_current_photo_archive_has_sidebar(): bool {
+	return abnet_is_photo_archive_page()
+		&& abnet_photo_archive_has_sidebar(get_queried_object_id());
 }
 
 /**
@@ -380,8 +399,10 @@ add_filter('post_thumbnail_html',
 
 function abnet_photo_archive_body_class(array $classes): array {
 	if (abnet_is_photo_archive_page()) {
-		$classes[] = 'full-width';
 		$classes[] = 'template-photo-archive';
+		$classes[] = _abnet_current_photo_archive_has_sidebar()
+			? 'photo-archive-with-sidebar'
+			: 'full-width';
 	} elseif (_abnet_current_photo_archive_chapter_context()) {
 		$classes[] = 'photo-archive-chapter';
 	}
@@ -394,7 +415,7 @@ add_filter('body_class',
 	20);
 
 function abnet_photo_archive_content_width(): void {
-	if (abnet_is_photo_archive_page()) {
+	if (abnet_is_photo_archive_page() && !_abnet_current_photo_archive_has_sidebar()) {
 		global $content_width;
 		$content_width = 1010;
 	}
@@ -441,6 +462,7 @@ function abnet_render_photo_archive_metabox(WP_Post $post): void {
 		get_categories(array('hide_empty' => false)),
 		(string)get_post_meta($post->ID, ABNET_PHOTO_ARCHIVE_SUBTITLE_META_KEY, true),
 		(string)get_post_meta($post->ID, ABNET_PHOTO_ARCHIVE_PERIOD_META_KEY, true),
+		get_post_meta($post->ID, ABNET_PHOTO_ARCHIVE_SIDEBAR_META_KEY, true) === '1',
 		ABNET_PHOTO_ARCHIVE_NONCE_ACTION,
 		ABNET_PHOTO_ARCHIVE_NONCE_NAME
 	);
@@ -483,6 +505,12 @@ function abnet_save_photo_archive_metabox(int $postId, WP_Post $post): void {
 	_abnet_update_photo_archive_text_meta($postId,
 		ABNET_PHOTO_ARCHIVE_PERIOD_META_KEY,
 		'abnet_photo_archive_period');
+
+	if (!empty($_POST['abnet_photo_archive_sidebar'])) {
+		update_post_meta($postId, ABNET_PHOTO_ARCHIVE_SIDEBAR_META_KEY, '1');
+	} else {
+		delete_post_meta($postId, ABNET_PHOTO_ARCHIVE_SIDEBAR_META_KEY);
+	}
 }
 
 add_action('save_post',

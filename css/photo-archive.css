@@ -283,6 +283,42 @@
 	text-align: center;
 }
 
+/*
+	With the blog sidebar ("Show the blog sidebar" in the Photo archive box):
+	from 1090px up the landing page sits in the regular content column beside it,
+	so the hero is lower and the introduction takes the whole column.
+	Below that the sidebar drops under the content and the full-width rules apply.
+*/
+@media screen and (min-width: 1090px) {
+	.photo-archive-with-sidebar .abnet-pa-hero-with-image {
+		min-height: 360px;
+	}
+
+	.photo-archive-with-sidebar .abnet-pa-hero-inner {
+		padding: 26px 28px 22px;
+	}
+
+	.photo-archive-with-sidebar .abnet-pa-title {
+		font-size: 30px;
+	}
+
+	.photo-archive-with-sidebar .abnet-pa-stats {
+		gap: 10px 28px;
+		margin-top: 20px;
+		padding-top: 16px;
+	}
+
+	.template-photo-archive.photo-archive-with-sidebar .abnet-pa-intro {
+		max-width: none;
+		margin: 0 0 32px;
+	}
+
+	.photo-archive-with-sidebar .abnet-pa-chapter-list {
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 20px;
+	}
+}
+
 /* =Chapter posts= */
 
 /*
